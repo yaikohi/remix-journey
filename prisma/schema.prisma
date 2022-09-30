@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  createAt      DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  username      String   @unique
+  passwordHash  String
+  favoriteBerry Berry?   @relation(fields: [berryId], references: [id])
+  berryId       Int
+}
+
+model Berry {
+  id        Int      @id
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User[]
+  name      String
+  flavors   Flavor[]
+}
+
+model Flavor {
+  id      String @id @default(uuid())
+  name    String
+  potency Int
+  Berry   Berry? @relation(fields: [berryId], references: [id])
+  berryId Int?
+}
