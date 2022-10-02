@@ -1,19 +1,10 @@
-import { Link } from "@remix-run/react";
+import { Navbar, routes } from "~/components/navbar";
 export default function Index() {
   return (
     <div>
       <h1>Welcome to Remix</h1>
 
-      <nav>
-        <ul>
-          <li>
-            <Link to="/berries">Berries </Link>
-          </li>
-          <li>
-            <Link to="/user">User </Link>
-          </li>
-        </ul>
-      </nav>
+    <Navbar routes={routes} />
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import { Link, Outlet } from "@remix-run/react";
+import { Navbar, routes } from "~/components/navbar";
+
 export default function User() {
   /**
    * TODO:
@@ -13,35 +15,27 @@ export default function User() {
     userName: "destroyer of berries",
   };
 
+  const userRoutes = [
+    {
+      to: "/user",
+      text: "User",
+    },
+    {
+      to: "/user/config",
+      text: "Config",
+    },
+  ];
   return (
     <div>
       <h1>Hello {user.userName}</h1>
-      <Outlet context={user} />
 
-      <div className="sec nav">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/user"> overview</Link>
-            </li>
-            <li>
-              <Link to="/user/config">config</Link>
-            </li>
-          </ul>
-        </nav>
+      <div className="p-3 bg-slate-100">
+        <h1 className="text-7xl">Berries</h1>
       </div>
-
-      <div className="main nav">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/berries">Berries </Link>
-            </li>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-          </ul>
-        </nav>
+      <div className="mx-auto items-center flex flex-col max-w-4xl p-24">
+        <Outlet context={user} />
+        <Navbar routes={userRoutes} />
+        <Navbar routes={routes} />
       </div>
     </div>
   );
