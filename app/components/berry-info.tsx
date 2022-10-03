@@ -36,45 +36,33 @@ export const FlavorTags = ({ flavors }: FlavorTagsProps) => {
   return (
     <>
       {flavors.map((flavor, idx) => {
-        if (flavor.potency) return (
-          <span
-            key={idx}
-            className="p-2 bg-blue-300 shadow-md text-white rounded-xl mx-1 first:mx-0"
-          >
-            {flavor.flavor.name}
-          </span>
-        );
+        if (flavor.potency)
+          return (
+            <span
+              key={idx}
+              className="p-2 mx-1 text-white bg-blue-300 shadow-md rounded-xl first:mx-0"
+            >
+              {flavor.flavor.name}
+            </span>
+          );
       })}
     </>
   );
 };
 
-export const BerryInfo = ({
-  //   name,
-  //   firmness,
-  //   flavors,
-  //   growth_time,
-  //   max_harvest,
-  //   natural_gift_power,
-  //   size,
-  //   smoothness,
-  //   soil_dryness,
-  berry,
-}: BerryInfoProps) => {
-  console.log(berry);
-
+export const BerryInfo = ({ berry }: BerryInfoProps) => {
   return (
-    <div className="bg-gradient-to-r from-indigo-300 via-red-200 to-yellow-100 text-white max-w-sm pt-6 rounded-xl mb-8 mx-8 shadow-md hover:shadow-lg">
-      <div className="my-4  min-w-full px-6 pb-12 pt-4">
-        <h3 className="text-4xl py-2 capitalize font-extrabold">
+    <div className="max-w-sm pt-6 mx-8 mb-8 text-white shadow-md w-80 bg-gradient-to-r from-indigo-300 via-red-200 to-yellow-100 rounded-xl hover:shadow-lg">
+      <div className="min-w-full px-6 pt-4 pb-12 my-4">
+        <h3 className="py-2 text-4xl font-extrabold capitalize">
           {berry.name}
         </h3>
-        <div className="pt-4 px-1">
+        <div className="px-1 pt-4">
           <FlavorTags flavors={berry.flavors} />
         </div>
       </div>
 
-      <dl className="grid grid-cols-2 py-4 rounded-xl gap-2 capitalize px-6 bg-white min-h-full">
+      <dl className="grid min-h-full grid-cols-2 gap-2 px-6 py-4 capitalize bg-white rounded-xl">
         <dt className="font-light text-slate-700">smoothness</dt>
         <dd className="text-black">{berry.smoothness}</dd>
 

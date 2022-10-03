@@ -25,9 +25,9 @@ export default function Pokemon() {
       <div className="p-3 bg-slate-100">
         <h1 className="text-7xl">Pokemon</h1>
       </div>
-      <div className="mx-auto items-center flex flex-col max-w-4xl p-24">
+      <Navbar routes={routes} />
+      <div className="flex flex-col items-center max-w-4xl p-24 mx-auto">
         <Outlet context={allPokemon} />
-        <Navbar routes={routes} />
       </div>
     </div>
   );

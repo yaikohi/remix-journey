@@ -33,10 +33,13 @@ interface NavbarProps {
 export const Navbar = ({ routes }: NavbarProps) => {
   return (
     <>
-      <nav>
-        <ul>
+      <nav className="flex flex-row py-2 my-2 bg-blue-100">
+        <ul className="flex flex-row items-center w-full gap-2">
           {routes.map((route, idx) => (
-            <li key={idx}>
+            <li
+              className=" first:mx-4 first:px-2 first:py-1 first:bg-blue-50 first:rounded-xl last:ml-auto"
+              key={idx}
+            >
               <NavbarLink to={route.to} text={route.text} />
             </li>
           ))}

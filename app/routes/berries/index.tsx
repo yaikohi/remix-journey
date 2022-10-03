@@ -31,14 +31,14 @@ export default function BerriesOverview() {
         <h2 className="text-xl">Todays berry: </h2>
         <BerryInfo berry={berryOfTheDay} />
         <p className="italic">
-          Did you know? There are 64 berries in the pokemon universe.
+          Did you know? There are 64 different berries? in pokemon?
         </p>
       </div>
-      <div>
+      <div className="flex flex-col my-8">
         <nav>
-          <ul>
+          <ul className="grid grid-cols-4 gap-2">
             {berries.map((berry: any, index: number) => (
-              <li key={index}>
+              <li key={index} className="p-1 mx-auto hover:bg-blue-100 bg-blue-50 rounded-xl">
                 <Link to={`/berries/${index}`}>{berry.name}</Link>
               </li>
             ))}

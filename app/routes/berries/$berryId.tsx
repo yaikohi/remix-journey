@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { BerryInfo } from "~/components/berry-info";
 
 export const loader: LoaderFunction = async ({ request, context, params }) => {
@@ -13,17 +13,16 @@ export const loader: LoaderFunction = async ({ request, context, params }) => {
   const res = await fetch(`${URL}${ID}`);
   const berry = await res.json();
 
-  // console.log("res: ", berry);
   return json(berry);
 };
 
 export default function Berry() {
   const berry = useLoaderData();
-  // console.log(berry);
   return (
-    <div>
-      <h1>name: {berry.name}</h1>
+    <div className="">
       <BerryInfo berry={berry} />
+      {/* TODO: Add pagination to the next berry */}
+      <Link to="">Next</Link>
     </div>
   );
 }
