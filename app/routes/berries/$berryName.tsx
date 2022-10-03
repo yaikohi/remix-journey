@@ -2,22 +2,17 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { BerryInfo } from "~/components/berry-info";
+import { getBerryByName } from "~/models/berry.server";
+
+type LoaderData = Awaited<ReturnType<typeof getBerryByName>>;
 
 export const loader: LoaderFunction = async ({ request, context, params }) => {
-  const URL = "https://pokeapi.co/api/v2/berry/";
-
-  // TODO: Research removal of ts-ignore for params.berryId
-  // @ts-ignore
-  const ID = parseInt(params.berryId) + 1;
-
-  const res = await fetch(`${URL}${ID}`);
-  const berry = await res.json();
-
-  return json(berry);
+  return json<LoaderData>(await getBerryByName(params.berryName));
 };
 
 export default function Berry() {
-  const berry = useLoaderData();
+  const { berry } = useLoaderData();
+  
   return (
     <div className="">
       <BerryInfo berry={berry} />
