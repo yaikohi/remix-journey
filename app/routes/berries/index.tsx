@@ -19,6 +19,19 @@ export const loader: LoaderFunction = async ({ request, context, params }) => {
   return json(berryOfTheDay);
 };
 
+type BerryTagProps = {
+  children: any;
+};
+const BerryTag = ({ children }: BerryTagProps) => {
+  return (
+    <>
+      <li className="p-1 mx-auto hover:bg-ctp-overlay1 bg-ctp-overlay0 rounded-xl">
+        {children}
+      </li>
+    </>
+  );
+};
+
 export default function BerriesOverview() {
   const berries = useOutletContext() as any;
   const berryOfTheDay = useLoaderData();
@@ -36,9 +49,9 @@ export default function BerriesOverview() {
         <nav>
           <ul className="grid grid-cols-4 gap-2">
             {berries.map((berry: any, index: number) => (
-              <li key={index} className="p-1 mx-auto hover:bg-blue-100 bg-blue-50 rounded-xl">
+              <BerryTag key={index}>
                 <Link to={`/berries/${berry.name}`}>{berry.name}</Link>
-              </li>
+              </BerryTag>
             ))}
           </ul>
         </nav>

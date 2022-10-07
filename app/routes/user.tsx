@@ -1,4 +1,4 @@
-import { Link, Outlet } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 import { Navbar, routes } from "~/components/navbar";
 
 export default function User() {
@@ -26,17 +26,16 @@ export default function User() {
     },
   ];
   return (
-    <div>
-      <h1>Hello {user.userName}</h1>
-
-      <div className="p-3 bg-slate-100">
-        <h1 className="text-7xl">Berries</h1>
+    <>
+      <div className="p-3 bg-ctp-crust">
+        <h1 className="text-7xl">User</h1>
       </div>
-      <div className="mx-auto items-center flex flex-col max-w-4xl p-24">
+      <Navbar routes={routes} />
+      <h1>Hello {user.userName}</h1>
+      <div className="flex flex-col items-center max-w-4xl p-24 mx-auto">
         <Outlet context={user} />
         <Navbar routes={userRoutes} />
-        <Navbar routes={routes} />
       </div>
-    </div>
+    </>
   );
 }

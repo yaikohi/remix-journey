@@ -1,3 +1,5 @@
+import { FlavorNames, getColorFromMap } from "~/utils/berryFlavorColorMap";
+
 type BerryInfoProps = {
   berry: Berry;
 };
@@ -22,7 +24,6 @@ type Flavor = {
   potency: number;
 };
 type Flavors = Flavor[];
-type FlavorNames = "dry" | "spicy" | "sweet" | "bitter" | "sour";
 type NaturalGiftType = {
   name: string;
   url: string;
@@ -33,28 +34,6 @@ type FlavorTagsProps = {
   flavors: Flavors;
 };
 
-const getFlavorColor = (flavor: FlavorNames) => {
-  switch (flavor) {
-    case "dry":
-      return "bg-ctp-orange";
-
-    case "spicy":
-      return "bg-ctp-red";
-
-    case "sweet":
-      return "bg-ctp-pink";
-
-    case "bitter":
-      return "bg-ctp-mauve";
-
-    case "sour":
-      return "bg-ctp-green";
-
-    default:
-      console.error("No valid flavor was provided.");
-  }
-};
-
 export const FlavorTags = ({ flavors }: FlavorTagsProps) => {
   return (
     <>
@@ -63,7 +42,7 @@ export const FlavorTags = ({ flavors }: FlavorTagsProps) => {
           return (
             <span
               key={idx}
-              className={`p-2 mx-1 text-white ${getFlavorColor(
+              className={`p-2 text-black mx-1 bg-ctp-${getColorFromMap(
                 flavor.flavor.name
               )} shadow-md rounded-xl first:mx-0`}
             >
@@ -105,7 +84,7 @@ export const BerryInfo = ({ berry }: BerryInfoProps) => {
   return (
     <div className="max-w-sm pt-6 mx-8 mb-8 shadow-md text-ctp-text w-80 bg-gradient-to-r from-ctp-blue via-ctp-red to-ctp-yellow rounded-xl hover:shadow-lg">
       <div className="min-w-full px-6 pt-4 pb-8 my-4 bg-opacity-40 rounded-xl bg-ctp-overlay0 ">
-        <h3 className="py-2 text-4xl font-extrabold capitalize max-w-min">
+        <h3 className="py-2 text-4xl font-extrabold text-black capitalize max-w-min">
           {berry.name}
         </h3>
         <div className="px-1 pt-4">

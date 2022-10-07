@@ -1,10 +1,14 @@
+import { getColorFromMap } from "~/utils/pokemonTypeColorMap";
+
 export const TypeTags = ({ types }: PokemonTypes) => {
   return (
     <>
       {types.map((type, idx) => {
         return (
           <span
-            className="p-2 bg-blue-300 shadow-md text-white rounded-xl mx-1 first:mx-0"
+            className={`p-2 mx-1 text-white bg-ctp-${getColorFromMap(
+              type.type.name
+            )} shadow-md rounded-xl first:mx-0`}
             key={idx}
           >
             {type.type.name}
@@ -23,7 +27,7 @@ type PokemonTypes = {
 };
 
 interface Type {
-  name: string;
+  name: PokemonTypeNames;
   url: string;
 }
 type PokemonInfoProps = {
@@ -48,14 +52,58 @@ type PokemonInfoProps = {
   };
 };
 
+type PokemonTypeNames =
+  | "normal"
+  | "fire"
+  | "water"
+  | "grass"
+  | "electric"
+  | "ice"
+  | "fighting"
+  | "poison"
+  | "ground"
+  | "flying"
+  | "psychic"
+  | "bug"
+  | "rock"
+  | "ghost"
+  | "dark"
+  | "dragon"
+  | "steel"
+  | "fairy";
+
+  const DataList = ({ children }: { children: any }) => {
+    return (
+      <dl className="grid min-h-full grid-cols-2 gap-2 px-6 py-4 capitalize bg-ctp-mantle rounded-b-xl">
+        {children}
+      </dl>
+    );
+  };
+  
+  const DataItem = ({
+    title,
+    content,
+  }: {
+    title: string;
+    content: string | number;
+  }) => {
+    return (
+      <>
+        <dt className="font-light text-ctp-subtext1">{title}</dt>
+        <dd className="text-ctp-text">{`${content}`}</dd>
+      </>
+    );
+  };
+  
+
 export const PokemonInfo = ({ pokemon }: PokemonInfoProps) => {
   return (
-    <div className="bg-gradient-to-r from-indigo-300 via-red-200 to-yellow-100 text-white w-80 max-w-md pt-6 rounded-xl mb-8 mx-8 shadow-md hover:shadow-lg">
-      <div className="my-4  min-w-full px-6 pb-12 pt-4 mx-auto flex flex-col">
-        <h3 className="text-4xl py-2 capitalize font-extrabold ">
+    <div className="max-w-md pt-6 mx-8 mb-8 shadow-md bg-gradient-to-r from-ctp-blue via-ctp-red to-ctp-yellow w-80 rounded-xl hover:shadow-lg">
+      <div className="flex flex-col min-w-full px-6 pt-4 pb-12 mx-auto my-4 bg-opacity-40 rounded-xl bg-ctp-overlay0 ">
+        <h3 className="py-2 text-4xl font-extrabold text-black capitalize max-w-min">
           {pokemon.name}
         </h3>
-        <div className="pt-4 px-1">
+        <div className="px-1 pt-4">
           <TypeTags types={pokemon.types} />
         </div>
         <div className="self-center mt-8">
@@ -65,14 +113,10 @@ export const PokemonInfo = ({ pokemon }: PokemonInfoProps) => {
           />
         </div>
       </div>
-
-      <dl className="grid grid-cols-2 py-4 rounded-xl gap-2 capitalize px-6 bg-white min-h-full">
-        <dt className="font-light text-slate-700">height</dt>
-        <dd className="text-black">{pokemon.height}</dd>
-
-        <dt className="font-light text-slate-700">weight</dt>
-        <dd className="text-black">{pokemon.weight}</dd>
-      </dl>
+      <DataList>
+        <DataItem title={"height"} content={pokemon.height} />
+        <DataItem title={"weight"} content={pokemon.weight} />
+      </DataList>
     </div>
   );
 };

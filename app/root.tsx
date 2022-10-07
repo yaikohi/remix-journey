@@ -29,7 +29,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-ctp-base text-ctp-text">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

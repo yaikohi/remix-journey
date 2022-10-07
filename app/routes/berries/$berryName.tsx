@@ -35,13 +35,13 @@ export default function Berry() {
       <BerryInfo berry={berry} />
       <div className="flex justify-between">
         <Link
-          className="p-2 text-white bg-blue-300 rounded-xl"
+          className="p-2 text-black bg-ctp-blue rounded-xl"
           to={prevBerryRoute}
         >
           Back ({prevBerryName})
         </Link>
         <Link
-          className="p-2 text-white bg-blue-300 rounded-xl"
+          className="p-2 text-black bg-ctp-blue rounded-xl"
           to={nextBerryRoute}
         >
           Next ({nextBerryName})
