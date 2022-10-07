@@ -23,8 +23,6 @@ export default function BerriesOverview() {
   const berries = useOutletContext() as any;
   const berryOfTheDay = useLoaderData();
 
-  console.log(berryOfTheDay);
-
   return (
     <>
       <div>
@@ -39,7 +37,7 @@ export default function BerriesOverview() {
           <ul className="grid grid-cols-4 gap-2">
             {berries.map((berry: any, index: number) => (
               <li key={index} className="p-1 mx-auto hover:bg-blue-100 bg-blue-50 rounded-xl">
-                <Link to={`/berries/${index}`}>{berry.name}</Link>
+                <Link to={`/berries/${berry.name}`}>{berry.name}</Link>
               </li>
             ))}
           </ul>

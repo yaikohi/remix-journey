@@ -6,7 +6,6 @@
     "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/tailwind.css",
     "dev": "concurrently \"pnpm run dev:css\" \"remix dev\"",
     "dev:css": "tailwindcss -w -o ./app/styles/app.css"
-
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
@@ -18,6 +17,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@catppuccin/tailwindcss": "^0.1.0",
     "@remix-run/dev": "^1.7.2",
     "@remix-run/eslint-config": "^1.7.2",
     "@remix-run/serve": "^1.7.2",

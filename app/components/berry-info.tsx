@@ -16,13 +16,13 @@ interface Berry {
 }
 type Flavor = {
   flavor: {
-    name: string;
+    name: FlavorNames;
     url: string;
   };
   potency: number;
 };
 type Flavors = Flavor[];
-
+type FlavorNames = "dry" | "spicy" | "sweet" | "bitter" | "sour";
 type NaturalGiftType = {
   name: string;
   url: string;
@@ -32,29 +32,80 @@ type Item = NaturalGiftType;
 type FlavorTagsProps = {
   flavors: Flavors;
 };
+
+const getFlavorColor = (flavor: FlavorNames) => {
+  switch (flavor) {
+    case "dry":
+      return "bg-ctp-orange";
+
+    case "spicy":
+      return "bg-ctp-red";
+
+    case "sweet":
+      return "bg-ctp-pink";
+
+    case "bitter":
+      return "bg-ctp-mauve";
+
+    case "sour":
+      return "bg-ctp-green";
+
+    default:
+      console.error("No valid flavor was provided.");
+  }
+};
+
 export const FlavorTags = ({ flavors }: FlavorTagsProps) => {
   return (
     <>
       {flavors.map((flavor, idx) => {
-        if (flavor.potency)
+        if (flavor.potency) {
           return (
             <span
               key={idx}
-              className="p-2 mx-1 text-white bg-blue-300 shadow-md rounded-xl first:mx-0"
+              className={`p-2 mx-1 text-white ${getFlavorColor(
+                flavor.flavor.name
+              )} shadow-md rounded-xl first:mx-0`}
             >
               {flavor.flavor.name}
             </span>
           );
+        } else {
+          return null;
+        }
       })}
+    </>
+  );
+};
+
+const DataList = ({ children }: { children: any }) => {
+  return (
+    <dl className="grid min-h-full grid-cols-2 gap-2 px-6 py-4 capitalize bg-ctp-mantle rounded-b-xl">
+      {children}
+    </dl>
+  );
+};
+
+const DataItem = ({
+  title,
+  content,
+}: {
+  title: string;
+  content: string | number;
+}) => {
+  return (
+    <>
+      <dt className="font-light text-ctp-subtext1">{title}</dt>
+      <dd className="text-ctp-text">{`${content}`}</dd>
     </>
   );
 };
 
 export const BerryInfo = ({ berry }: BerryInfoProps) => {
   return (
-    <div className="max-w-sm pt-6 mx-8 mb-8 text-white shadow-md w-80 bg-gradient-to-r from-indigo-300 via-red-200 to-yellow-100 rounded-xl hover:shadow-lg">
-      <div className="min-w-full px-6 pt-4 pb-12 my-4">
-        <h3 className="py-2 text-4xl font-extrabold capitalize">
+    <div className="max-w-sm pt-6 mx-8 mb-8 shadow-md text-ctp-text w-80 bg-gradient-to-r from-ctp-blue via-ctp-red to-ctp-yellow rounded-xl hover:shadow-lg">
+      <div className="min-w-full px-6 pt-4 pb-8 my-4 bg-opacity-40 rounded-xl bg-ctp-overlay0 ">
+        <h3 className="py-2 text-4xl font-extrabold capitalize max-w-min">
           {berry.name}
         </h3>
         <div className="px-1 pt-4">
@@ -62,32 +113,20 @@ export const BerryInfo = ({ berry }: BerryInfoProps) => {
         </div>
       </div>
 
-      <dl className="grid min-h-full grid-cols-2 gap-2 px-6 py-4 capitalize bg-white rounded-xl">
-        <dt className="font-light text-slate-700">smoothness</dt>
-        <dd className="text-black">{berry.smoothness}</dd>
-
-        <dt className="font-light text-slate-700">Firmness</dt>
-        <dd className="text-black">{berry.firmness.name}</dd>
-
-        <dt className="font-light text-slate-700">size</dt>
-        <dd className="text-black">{berry.size}</dd>
-
-        <dt className="font-light text-slate-700">growth time</dt>
-        <dd className="text-black">{berry.growth_time}</dd>
-
-        <dt className="font-light text-slate-700">natural gift type</dt>
-        {/* 
-        TODO:
-        - Add different color tag for every berry-type.
-         */}
-        <dd className="text-black">{berry.natural_gift_type.name}</dd>
-
-        <dt className="font-light text-slate-700">natural gift power</dt>
-        <dd className="text-black">{berry.natural_gift_power}</dd>
-
-        <dt className="font-light text-slate-700">soil dryness</dt>
-        <dd className="text-black">{berry.soil_dryness}</dd>
-      </dl>
+      <DataList>
+        <DataItem title={"firmness"} content={berry.firmness.name} />
+        <DataItem title={"size"} content={berry.size} />
+        <DataItem title={"growth time"} content={berry.growth_time} />
+        <DataItem
+          title={"natural gift type"}
+          content={berry.natural_gift_type.name}
+        />
+        <DataItem
+          title={"natural gift power"}
+          content={berry.natural_gift_power}
+        />
+        <DataItem title={"soil dryness"} content={berry.soil_dryness} />
+      </DataList>
     </div>
   );
 };
