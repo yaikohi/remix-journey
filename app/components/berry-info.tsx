@@ -1,4 +1,5 @@
-import { FlavorNames, getColorFromMap } from "~/utils/berryFlavorColorMap";
+import type { FlavorNames} from "~/utils/berryFlavorColorMap";
+import { getColorFromMap } from "~/utils/berryFlavorColorMap";
 
 type BerryInfoProps = {
   berry: Berry;
