@@ -1,23 +1,5 @@
+import type { PokemonTypeNames } from "types/pokemon";
 import type { CTPColors } from "./CTPTailwindColors";
-export type PokemonTypeNames =
-  | "normal"
-  | "fire"
-  | "water"
-  | "grass"
-  | "electric"
-  | "ice"
-  | "fighting"
-  | "poison"
-  | "ground"
-  | "flying"
-  | "psychic"
-  | "bug"
-  | "rock"
-  | "ghost"
-  | "dark"
-  | "dragon"
-  | "steel"
-  | "fairy";
 
 type CTPPOKEMONMAPITEM = [PokemonTypeNames, CTPColors];
 
@@ -42,10 +24,10 @@ const ctpPokemonArr: CTPPOKEMONMAPITEM[] = [
   ["fairy", "pink"],
 ];
 
-export type TPokemonTypeColorMap = Map<PokemonTypeNames, CTPColors>;
+type TPokemonTypeColorMap = Map<PokemonTypeNames, CTPColors>;
 
 export const PokemonTypeColorMap: TPokemonTypeColorMap = new Map(ctpPokemonArr);
 
-export const getColorFromMap = (pokemonType: PokemonTypeNames) => {
-    return PokemonTypeColorMap.get(pokemonType)
-}
+export const getTypeColorFromMap = (pokemonType: PokemonTypeNames) => {
+  return PokemonTypeColorMap.get(pokemonType);
+};

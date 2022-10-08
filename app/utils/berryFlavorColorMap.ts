@@ -15,6 +15,6 @@ export type TFlavorColorMap = Map<FlavorNames, CTPColors>;
 
 export const FlavorColorMap: TFlavorColorMap = new Map(ctpPokemonArr);
 
-export const getColorFromMap = (flavor: FlavorNames) => {
+export const getFlavorColorFromMap = (flavor: FlavorNames): CTPColors | undefined => {
   return FlavorColorMap.get(flavor);
 };
