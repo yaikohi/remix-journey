@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { PokemonInfo } from "~/components/pokemon-info";
+import { PokemonInfo } from "~/components/pokemon-info/pokemon-info";
 
 export const loader: LoaderFunction = async ({ request, context, params }) => {
   const URL = "https://pokeapi.co/api/v2/pokemon/";

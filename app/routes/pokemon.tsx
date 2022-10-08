@@ -1,24 +1,17 @@
 import { json } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { Navbar, routes } from "~/components/navbar";
+import { getAllPokemons } from "~/models/pokemon.server";
 
 export const loader = async () => {
-  /**
-   * TODO: Fetch sprite img for berries.
-   *
-   * berry png https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/chesto-berry.png
-   * berry.item.name => fetch chesto-berry.png
-   */
-
-  // https://pokeapi.co/api/v2/berry/{id or name}/
-  const res = await fetch("https://pokeapi.co/api/v2/pokemon/");
-  const data = await res.json();
-  const allPokemon = data.results;
-  return json({ allPokemon });
+  const data = await getAllPokemons();
+  console.log(data);
+  return json({ data });
 };
 
 export default function Pokemon() {
-  const { allPokemon } = useLoaderData();
+  const { data } = useLoaderData();
+  console.log(data);
 
   return (
     <>
@@ -27,7 +20,7 @@ export default function Pokemon() {
       </div>
       <Navbar routes={routes} />
       <div className="flex flex-col items-center max-w-4xl p-24 mx-auto">
-        <Outlet context={allPokemon} />
+        <Outlet context={data} />
       </div>
     </>
   );

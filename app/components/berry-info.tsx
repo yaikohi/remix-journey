@@ -1,5 +1,10 @@
-import type { FlavorNames} from "~/utils/berryFlavorColorMap";
-import { getColorFromMap } from "~/utils/berryFlavorColorMap";
+import type { FlavorNames } from "~/utils/berryFlavorColorMap";
+import { getFlavorColorFromMap } from "~/utils/berryFlavorColorMap";
+import type {
+  PokemonTypeNames} from "~/utils/pokemonTypeColorMap";
+import {
+  getTypeColorFromMap
+} from "~/utils/pokemonTypeColorMap";
 
 type BerryInfoProps = {
   berry: Berry;
@@ -43,7 +48,7 @@ export const FlavorTags = ({ flavors }: FlavorTagsProps) => {
           return (
             <span
               key={idx}
-              className={`p-2 text-black mx-1 bg-ctp-${getColorFromMap(
+              className={`p-2 text-black mx-1 bg-ctp-${getFlavorColorFromMap(
                 flavor.flavor.name
               )} shadow-md rounded-xl first:mx-0`}
             >
@@ -73,6 +78,18 @@ const DataItem = ({
   title: string;
   content: string | number;
 }) => {
+  if (title === "natural gift type") {
+    return (
+      <>
+        <dt className="font-light text-ctp-subtext1">{title}</dt>
+        <dd
+          className={`text-ctp-text bg-ctp-${getTypeColorFromMap(
+            content as PokemonTypeNames
+          )}`}
+        >{`${content}`}</dd>
+      </>
+    );
+  }
   return (
     <>
       <dt className="font-light text-ctp-subtext1">{title}</dt>
