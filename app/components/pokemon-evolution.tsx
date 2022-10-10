@@ -2,7 +2,6 @@
 // render component for pages
 
 import { Link } from "@remix-run/react/dist/components"
-import tw from "tailwind-styled-components"
 import type { Pokemon } from "types/pokemon"
 
 type PokemonEvolutionsProps = {
@@ -13,18 +12,16 @@ type PokemonEvolutionsProps = {
     }
 }
 
-const SpriteContainer = tw.div`p-2 m-2 text-center rounded-md shadow-sm bg-ctp-overlay0 hover:bg-ctp-overlay1`
-
 function SpriteImage({ name, url }: { name: string; url: string }) {
     return (
-        <SpriteContainer>
+        <div className="p-2 m-2 text-center rounded-md shadow-sm bg-ctp-overlay0 hover:bg-ctp-overlay1">
             <Link to={`/pokemon/${name}`}>
                 <span>
                     <h3>{name}</h3>
                     <img src={url} alt={`${name}`} />
                 </span>
             </Link>
-        </SpriteContainer>
+        </div>
     )
 }
 
