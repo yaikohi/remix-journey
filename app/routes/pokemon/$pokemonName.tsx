@@ -1,28 +1,48 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData, useMatches } from "@remix-run/react";
-import { getPokemonByName } from "~/models/pokemon.server";
+import type { Pokemon as PokemonType } from "types/pokemon";
+import PokemonEvolutionChain from "~/components/pokemon-evolution";
+import PokemonEvolution from "~/components/pokemon-evolution";
+import { getPokemonByName, getNextEvolutions } from "~/models/pokemon.server";
 
-type LoaderData = Awaited<ReturnType<typeof getPokemonByName>>;
+type ReturnData = {
+  pokemon: Awaited<ReturnType<typeof getPokemonByName>>;
+  evolutions: Awaited<ReturnType<typeof getNextEvolutions>>;
+};
 
+type LoaderData = ReturnData;
 
+// fetch evolution chain on page component, feed evolution chain to child component 'PokemonEvolution"
 export const loader: LoaderFunction = async ({ request, context, params }) => {
-  return json<LoaderData>(await getPokemonByName(params.pokemonName));
+  const pokemon = await getPokemonByName(params.pokemonName);
+
+  const evolutions = await getNextEvolutions(pokemon.species.url);
+
+  console.log("FROM LOADER: ", evolutions);
+
+  return json<LoaderData>({
+    pokemon,
+    evolutions,
+  });
 };
 
 export default function Pokemon() {
-  const { pokemon } = useLoaderData();
+  const { pokemon } = useLoaderData<typeof loader>();
+  const { evolutions } = useLoaderData<typeof loader>();
 
-  const spriteSrc: string = pokemon.sprites.front_default;
-  const name: string = pokemon.name;
-  const abilities: any[] = pokemon.abilities;
-  const moves: any[] = pokemon.moves;
-  const types = pokemon.types;
-  const stats = pokemon.stats;
+  console.log("full: ", evolutions);
 
+  const spriteSrc: PokemonType["sprites"]["front_default"] =
+    pokemon.sprites.front_default;
+  const name: PokemonType["name"] = pokemon.name;
+  const abilities: PokemonType["abilities"] = pokemon.abilities;
+  const moves: PokemonType["moves"] = pokemon.moves;
+  const types: PokemonType["types"] = pokemon.types;
+  // const stats: PokemonType["stats"] = pokemon.stats;
+  const species: PokemonType["species"] = pokemon.species;
 
-//   const relatedRoutes = useMatches();
-  console.log(pokemon);
+  //   const relatedRoutes = useMatches();
 
   //   const berries = relatedRoutes[1].data?.berries;
   //   const currentBerryIndex = relatedRoutes[1].data?.berries.findIndex(
@@ -66,8 +86,9 @@ export default function Pokemon() {
         </div>
       </div>
 
+      {/* Evolution component here */}
       <div className="col-span-3 bg-ctp-surface0">
-        <h2 className="text-2xl">Evolution</h2>
+        <PokemonEvolutionChain evolutions={evolutions} />
       </div>
 
       <div>

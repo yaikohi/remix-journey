@@ -5,13 +5,11 @@ import { getAllPokemons } from "~/models/pokemon.server";
 
 export const loader = async () => {
   const data = await getAllPokemons();
-  console.log(data);
   return json({ data });
 };
 
 export default function Pokemon() {
   const { data } = useLoaderData();
-  console.log(data);
 
   return (
     <>

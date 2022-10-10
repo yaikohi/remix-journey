@@ -20,11 +20,11 @@ export type Pokemon = {
 };
 
 interface Sprites {
-  back_default: string | undefined;
+  back_default: string;
   back_female: string | undefined;
   back_shiny: string | undefined;
   back_shiny_female: string | undefined;
-  front_default: string | undefined;
+  front_default: string;
   front_female: string | undefined;
   front_shiny: string | undefined;
   front_shiny_female: string | undefined;
@@ -39,7 +39,7 @@ interface PokemonStat {
 }
 
 type PokemonMove = {
-  move: Move[];
+  move: Move;
   version_group_details: VersionGroupDetails[];
 };
 type Move = {

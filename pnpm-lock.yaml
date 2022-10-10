@@ -19,6 +19,7 @@ specifiers:
   prisma: ^4.4.0
   react: ^18.2.0
   react-dom: ^18.2.0
+  tailwind-styled-components: ^2.2.0
   tailwindcss: ^3.1.8
   typescript: ^4.8.4
 
@@ -43,6 +44,7 @@ devDependencies:
   eslint: 8.24.0
   postcss: 8.4.16
   prisma: 4.4.0
+  tailwind-styled-components: 2.2.0_biqbaboplfbrettd7655fr4n2y
   tailwindcss: 3.1.8_postcss@8.4.16
   typescript: 4.8.4
 
@@ -7263,6 +7265,21 @@ packages:
     dependencies:
       '@pkgr/utils': 2.3.1
       tslib: 2.4.0
+    dev: true
+
+  /tailwind-merge/1.6.1:
+    resolution: {integrity: sha512-wC/tta/BxpmE/4Qc7WX0OK+ajhetgpJZ+IfQMpUBOv4nWjlxQKbq/FBkcZDX7fVGq2RJBnWa3WzsPz5mUe+g7g==}
+    dev: true
+
+  /tailwind-styled-components/2.2.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-Ogemwk0p69aU8WE/ooJZHjqstdJgT5R6HGU6TFz2uSnveSEtvW+C6aWOjGCvCr5H/bREv0IbbQ4yODknRrLBRQ==}
+    peerDependencies:
+      react: '>= 16.8.0'
+      react-dom: '>= 16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tailwind-merge: 1.6.1
     dev: true
 
   /tailwindcss/3.1.8_postcss@8.4.16:
