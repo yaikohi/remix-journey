@@ -12,7 +12,6 @@ export async function getBerryByName(name: string | undefined) {
     const res = await fetch(`https://pokeapi.co/api/v2/berry/${name}`)
     const berry = await res.json()
 
-    console.log(berry)
     return {
         berry
     }

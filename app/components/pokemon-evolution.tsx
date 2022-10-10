@@ -4,12 +4,13 @@
 import { Link } from "@remix-run/react/dist/components"
 import type { Pokemon } from "types/pokemon"
 
+type PokemonEvolutions = {
+    first: null | Pokemon
+    second: null | Pokemon
+    third: null | Pokemon
+}
 type PokemonEvolutionsProps = {
-    evolutions: {
-        first: null | Pokemon
-        second: null | Pokemon
-        third: null | Pokemon
-    }
+    evolutions: PokemonEvolutions
 }
 
 function SpriteImage({ name, url }: { name: string; url: string }) {

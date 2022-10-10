@@ -2,6 +2,7 @@ import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import type { Pokemon as PokemonType } from "types/pokemon"
+import PokemonEeveeVolutions from "~/components/  pokemon-eevee-volution"
 import PokemonEvolutionChain from "~/components/pokemon-evolution"
 import {
     getPokemonByName,
@@ -22,7 +23,7 @@ export const loader: LoaderFunction = async ({ request, context, params }) => {
 
     return json<LoaderData>({
         pokemon,
-        evolutions,
+        evolutions
     })
 }
 
@@ -30,8 +31,7 @@ export default function Pokemon() {
     const { pokemon } = useLoaderData<typeof loader>()
     const { evolutions } = useLoaderData<typeof loader>()
 
-    // console.log("full: ", evolutions)
-    // console.log("full: ", pokemon)
+    const typeOfEvolutions = typeof evolutions === "object" && evolutions.first
 
     const spriteSrc: PokemonType["sprites"]["front_default"] =
         pokemon.sprites.front_default
@@ -88,7 +88,11 @@ export default function Pokemon() {
 
             {/* Evolution component here */}
             <div className="col-span-3 bg-ctp-surface0">
-                <PokemonEvolutionChain evolutions={evolutions} />
+                {typeOfEvolutions ? (
+                    <PokemonEvolutionChain evolutions={evolutions} />
+                ) : (
+                    <PokemonEeveeVolutions evolutions={evolutions} />
+                )}
             </div>
 
             <div>
