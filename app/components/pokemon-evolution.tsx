@@ -34,26 +34,45 @@ export default function PokemonEvolutionChain({
     const second = evolutions.second
     const third = evolutions.third
 
+    console.log(evolutions)
     return (
         <>
             <h2 className="text-2xl bg-ctp-surface1">Evolutions</h2>
-            <div className="flex justify-center">
+            <div className="grid justify-center grid-cols-3">
                 {first && (
                     <SpriteImage
                         name={first?.name}
-                        url={first?.sprites?.front_default}
+                        url={
+                            first?.sprites?.other["official-artwork"]
+                                ?.front_default
+                                ? first?.sprites?.other["official-artwork"]
+                                      ?.front_default
+                                : ""
+                        }
                     />
                 )}
                 {second && (
                     <SpriteImage
                         name={second?.name}
-                        url={second?.sprites?.front_default}
+                        url={
+                            second?.sprites?.other["official-artwork"]
+                                ?.front_default
+                                ? second?.sprites?.other["official-artwork"]
+                                      ?.front_default
+                                : ""
+                        }
                     />
                 )}
                 {third && (
                     <SpriteImage
                         name={third?.name}
-                        url={third?.sprites.front_default}
+                        url={
+                            third?.sprites?.other["official-artwork"]
+                                ?.front_default
+                                ? third?.sprites?.other["official-artwork"]
+                                      ?.front_default
+                                : ""
+                        }
                     />
                 )}
             </div>

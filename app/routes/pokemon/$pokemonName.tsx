@@ -1,9 +1,11 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
-import { useLoaderData } from "@remix-run/react"
-import type { Pokemon as PokemonType } from "types/pokemon"
-import PokemonEeveeVolutions from "~/components/  pokemon-eevee-volution"
+import { Link, useLoaderData, useMatches } from "@remix-run/react"
+import type { Move, Pokemon as PokemonType } from "types/pokemon"
+import PokemonEeveeVolutions from "~/components/pokemon-eevee-volution"
 import PokemonEvolutionChain from "~/components/pokemon-evolution"
+import PokemonMoves from "~/components/pokemon-moves"
+import { getMoveByName } from "~/models/pokemon-moves.server"
 import {
     getPokemonByName,
     getPokemonWithEvolutions
@@ -12,61 +14,88 @@ import {
 type ReturnData = {
     pokemon: Awaited<ReturnType<typeof getPokemonByName>>
     evolutions: Awaited<ReturnType<typeof getPokemonWithEvolutions>>
+    // moves: Awaited<ReturnType<typeof getMoveByName>>[]
 }
 
 type LoaderData = ReturnData
 
-// fetch evolution chain on page component, feed evolution chain to child component 'PokemonEvolution"
 export const loader: LoaderFunction = async ({ request, context, params }) => {
     const pokemon = await getPokemonByName(params.pokemonName)
-    const evolutions = await getPokemonWithEvolutions(pokemon.species.url)
+    // console.log("\n\npokemon.species.url - from LOADER: ", pokemon.species.url)
+
+    const evolutions = await getPokemonWithEvolutions(pokemon)
+
+    // console.log("\n\nevolution from LOADER: ", evolutions, "\n\n")
+    // const moves: Move[] = await Promise.all(
+    //     pokemon.moves.map(async (move, idx) => {
+    //         return await getMoveByName(move.move.name)
+    //     })
+    // )
 
     return json<LoaderData>({
         pokemon,
         evolutions
+        // moves
     })
 }
 
 export default function Pokemon() {
     const { pokemon } = useLoaderData<typeof loader>()
+    // console.log(pokemon)
+
     const { evolutions } = useLoaderData<typeof loader>()
+    // console.log(pokemon.name, evolutions)
+    const { moves } = useLoaderData<typeof loader>()
+    console.log(moves)
+    const isOnlyEvolution = !!evolutions.first && !evolutions.second
+    const hasEvolutions = !!evolutions.second
 
-    const typeOfEvolutions = typeof evolutions === "object" && evolutions.first
-
-    const spriteSrc: PokemonType["sprites"]["front_default"] =
-        pokemon.sprites.front_default
+    const spriteSrc: PokemonType["sprites"]["other"]["official-artwork"]["front_default"] =
+        pokemon.sprites.other["official-artwork"].front_default
     const name: PokemonType["name"] = pokemon.name
     const abilities: PokemonType["abilities"] = pokemon.abilities
-    const moves: PokemonType["moves"] = pokemon.moves
     const types: PokemonType["types"] = pokemon.types
-    // const stats: PokemonType["stats"] = pokemon.stats;
-    // const species: PokemonType["species"] = pokemon.species
 
-    //   const relatedRoutes = useMatches();
+    const relatedRoutes = useMatches()
+    const pokemons = relatedRoutes[1].data
+    const currentPokemonIndex: number = relatedRoutes[1].data?.findIndex(
+        (pokeman: PokemonType) => pokeman.name === pokemon.name
+    )
+    const nextPokemonIndex =
+        currentPokemonIndex === pokemons.length - 1
+            ? 0
+            : currentPokemonIndex + 1
+    const prevPokemonIndex =
+        currentPokemonIndex === 0
+            ? pokemons.length - 1
+            : currentPokemonIndex - 1
 
-    //   const berries = relatedRoutes[1].data?.berries;
-    //   const currentBerryIndex = relatedRoutes[1].data?.berries.findIndex(
-    //     (pokeman) => pokeman.name === pokemon.name
-    //   );
-    //   const nextBerryIndex =
-    //     currentBerryIndex === berries.length - 1 ? 0 : currentBerryIndex + 1;
-    //   const prevBerryIndex =
-    //     currentBerryIndex === 0 ? berries.length - 1 : currentBerryIndex - 1;
+    const nextPokemonName = pokemons[nextPokemonIndex]?.name
+    const prevPokemonName = pokemons[prevPokemonIndex]?.name
 
-    //   const nextBerryName = berries[nextBerryIndex]?.name;
-    //   const prevBerryName = berries[prevBerryIndex]?.name;
-
-    //   const nextBerryRoute = `${relatedRoutes[1].pathname}/${nextBerryName}`;
-    //   const prevBerryRoute = `${relatedRoutes[1].pathname}/${prevBerryName}`;
+    const nextPokemonRoute = `${relatedRoutes[1].pathname}/${nextPokemonName}`
+    const prevPokemonRoute = `${relatedRoutes[1].pathname}/${prevPokemonName}`
 
     return (
         <div className="grid grid-cols-3 gap-10 capitalize">
-            <div className="col-span-3 bg-ctp-surface0">
-                <h1 className="text-5xl">{name}</h1>
+            <div className="flex justify-center col-span-3 align-middle bg-ctp-surface0">
+                <Link
+                    className="self-center p-2 m-4 bg-ctp-overlay0 hover:bg-ctp-overlay1 rounded-xl"
+                    to={prevPokemonRoute}
+                >
+                    back ({prevPokemonName})
+                </Link>
+                <h1 className="p-2 m-4 text-5xl">{name}</h1>
+                <Link
+                    className="self-center p-2 m-4 bg-ctp-overlay0 hover:bg-ctp-overlay1 rounded-xl"
+                    to={nextPokemonRoute}
+                >
+                    Next ({nextPokemonName})
+                </Link>
             </div>
 
             <div className="bg-ctp-surface0">
-                <img src={spriteSrc} alt={`${name} sprite`} />
+                <img src={spriteSrc ? spriteSrc : ""} alt={`${name} sprite`} />
                 <h2 className="text-2xl">Stats</h2>
             </div>
 
@@ -87,35 +116,22 @@ export default function Pokemon() {
             </div>
 
             {/* Evolution component here */}
-            <div className="col-span-3 bg-ctp-surface0">
-                {typeOfEvolutions ? (
-                    <PokemonEvolutionChain evolutions={evolutions} />
-                ) : (
-                    <PokemonEeveeVolutions evolutions={evolutions} />
-                )}
-            </div>
+            {isOnlyEvolution ? (
+                <></>
+            ) : (
+                <div className="col-span-3 bg-ctp-surface0">
+                    {hasEvolutions ? (
+                        <PokemonEvolutionChain evolutions={evolutions} />
+                    ) : (
+                        <PokemonEeveeVolutions evolutions={evolutions} />
+                    )}
+                </div>
+            )}
 
             <div>
                 <h2 className="text-2xl">Moves</h2>
-                <div>
-                    {moves.map((move, idx) => (
-                        <p key={idx}>{move.move.name}</p>
-                    ))}
-                </div>
+                {/* <div><PokemonMoves moves={moves} /></div> */}
             </div>
-
-            {/* <Link
-          className="p-2 text-black bg-ctp-blue rounded-xl"
-          to={prevBerryRoute}
-        >
-          Back ({prevBerryName})
-        </Link>
-        <Link
-          className="p-2 text-black bg-ctp-blue rounded-xl"
-          to={nextBerryRoute}
-        >
-          Next ({nextBerryName})
-        </Link> */}
         </div>
     )
 }

@@ -22,7 +22,7 @@ function SpriteImage({ name, url }: { name: string; url: string }) {
 }
 
 /**
- * TODO: 
+ * TODO:
  * - Show first evolution form on page as well, for example:
  *  eevee isn't showing when on any of its evolution pages.
  *
@@ -35,13 +35,20 @@ export default function PokemonEeveeVolutions({
     return (
         <>
             <h2 className="text-2xl bg-ctp-surface1">Evolutions</h2>
-            <div className="flex justify-center">
+            <div className="grid justify-center grid-cols-4">
                 {evolutions.map((evolution, idx) => {
                     return (
                         <SpriteImage
                             key={evolution.id}
                             name={evolution?.name}
-                            url={evolution?.sprites?.front_default}
+                            url={
+                                evolution?.sprites?.other["official-artwork"]
+                                    .front_default
+                                    ? evolution?.sprites?.other[
+                                          "official-artwork"
+                                      ].front_default
+                                    : ""
+                            }
                         />
                     )
                 })}
