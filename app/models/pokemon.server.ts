@@ -32,6 +32,15 @@ export async function getPokemonByName(
     return pokemon
 }
 
+export async function getPokemonById(
+    id: string | number
+): Promise<Pokemon>{
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    const pokemon: Pokemon = await res.json()
+
+    return pokemon
+}
+
 async function getPokemonSpecies(pokemon: Pokemon): Promise<PokemonSpecies> {
     const res = await fetch(pokemon.species.url)
     const pokemonSpecies = await res.json()
