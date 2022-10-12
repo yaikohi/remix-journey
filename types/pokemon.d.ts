@@ -93,73 +93,73 @@ interface PokemonStat {
     stat: Stat
 }
 
-type PokemonMove = {
+export type PokemonMove = {
     move: Move
     version_group_details: VersionGroupDetails[]
 }
-type Move = {
+export type Move = {
     name: string
     url: string
 }
 
-type VersionGroupDetails = {
+export type VersionGroupDetails = {
     level_learned_at: number
     move_learn_method: MoveLearnMethod
     version_group: VersionGroup
 }
-type VersionGroup = {
+export type VersionGroup = {
     name: string
     url: string
 }
-type Species = {
+export type Species = {
     name: string
     url: string
 }
-type MoveLearnMethod = {
+export type MoveLearnMethod = {
     name: string
     url: string
 }
-type Item = {
+export type Item = {
     name: string
     url: string
 }
-type HeldItem = {
+export type HeldItem = {
     item: Item
     version_details: VersionDetail[]
 }
-type VersionDetail = [rarity: number, version: Version]
-type Ability = {
+export type VersionDetail = [rarity: number, version: Version]
+export type Ability = {
     name: string
     url: string
 }
-type GameIndice = {
+export type GameIndice = {
     game_index: number
     version: Version
 }
-type Version = {
+export type Version = {
     name: string
     url: string
 }
-type Form = {
+export type Form = {
     name: string
     url: string
 }
-type PokemonAbility = {
+export type PokemonAbility = {
     ability: Ability
     is_hidden: boolean
     slot: number
 }
-type Stat = {
+export type Stat = {
     name: string
     url: string
 }
 
-type PokemonType = {
+export type PokemonType = {
     slot: number
     type: Type
 }
 
-type Type = {
+export type Type = {
     name: PokemonTypeNames
     url: string
 }

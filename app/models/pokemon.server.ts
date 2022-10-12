@@ -5,11 +5,13 @@ import type {
     PokemonSpecies
 } from "types/pokemon"
 import type { PokemonEvolutionChain } from "types/pokemonEvolutionChain"
+import {
+    pokemonHasNoEvolutions,
+    pokemonHasThirdEvolution,
+    pokemonIsEeveeLike,
+    pokemonIsUrshifu
+} from "~/utils/pokemonFilters"
 
-/**
- * Fetches all the pokemons given the url's parameters.
- *
- */
 export async function getAllPokemons(): Promise<
     { name: Pokemon["name"]; url: string }[]
 > {
@@ -21,11 +23,6 @@ export async function getAllPokemons(): Promise<
     return data.results
 }
 
-/**
- * Returns a `Pokemon` object by name.
- *
- * @param name
- */
 export async function getPokemonByName(
     name: string | undefined
 ): Promise<Pokemon> {
@@ -35,11 +32,6 @@ export async function getPokemonByName(
     return pokemon
 }
 
-/**
- * Fetches the url from a pokemon that links to the evolution chain of that pokemon's species.
- *
- * @param pokemon
- */
 async function getPokemonSpecies(pokemon: Pokemon): Promise<PokemonSpecies> {
     const res = await fetch(pokemon.species.url)
     const pokemonSpecies = await res.json()
@@ -47,14 +39,9 @@ async function getPokemonSpecies(pokemon: Pokemon): Promise<PokemonSpecies> {
     return pokemonSpecies
 }
 
-/**
- * Fetches the evolution_chain (EvolutionChain) of a pokemon given the `pokemon.species.url`.
- *
- * @param pokemon
- */
 export async function getPokemonEvolutionChain(
     pokemon: Pokemon
-): Promise<PokemonEvolutionChain | any> {
+): Promise<PokemonEvolutionChain | undefined> {
     const pokemonSpecies = await getPokemonSpecies(pokemon)
 
     if (pokemonSpecies.evolution_chain === null) {
@@ -68,8 +55,6 @@ export async function getPokemonEvolutionChain(
 }
 
 /**
- * - TODO: Refactor!!!!!!!!!!! PLEASE
- *
  * Fetches the first, second, and third evolution of a pokemon.
  * Also returns all kinds of potential evolutions of eevee-like pokemon.
  *
@@ -81,42 +66,28 @@ export async function getPokemonWithEvolutions(
 ): Promise<Pokemon | PokemonEvolutions | PokemonEeveevolutions> {
     const evolutionChain = await getPokemonEvolutionChain(pokemon)
 
-    console.log("evolutionChain: \n\n\n\n", pokemon.name, evolutionChain)
-
     if (evolutionChain === undefined) {
         return { first: pokemon, second: null, third: null }
     }
 
-    // first 'evolution'
     const firstEvolutionPokemon = await getPokemonByName(
         evolutionChain.chain.species.name
     )
 
-    // If the pokemon has no evolutions, return null
-    if (evolutionChain.chain.evolves_to.length === 0) {
+    if (pokemonHasNoEvolutions(evolutionChain)) {
         return { first: firstEvolutionPokemon, second: null, third: null }
     }
 
-    // true if pokemon can evolve into different kinds of pokemon
-    if (evolutionChain.chain.evolves_to.length > 1) {
-        const names = await getEvolutionNames(evolutionChain)
-        const pokemons: Pokemon[] = await Promise.all(
-            names.map(async (name) => {
-                return await getPokemonByName(name)
-            })
-        )
-        pokemons.push(pokemon)
-
-        return pokemons
+    // true if pokemon can evolve into different kinds of pokemon, like eevee
+    if (pokemonIsEeveeLike(evolutionChain)) {
+        return await getEeveeLikePokemonEvolutions(evolutionChain)
     }
 
-    // second evolution
-    if (evolutionChain.chain.evolves_to[0].species.name === "urshifu") {
+    // Pokemon 'Urshifu' bug-fix. API is not consistent so I need to manually account for this...
+    if (pokemonIsUrshifu(evolutionChain)) {
         const secondEvolutionPokemon = await getPokemonByName(
             "urshifu-single-strike"
         )
-
-        // console.log(secondEvolutionPokemon)
 
         return {
             first: firstEvolutionPokemon,
@@ -124,21 +95,13 @@ export async function getPokemonWithEvolutions(
             third: null
         }
     }
+
     const secondEvolutionPokemon = await getPokemonByName(
         evolutionChain.chain.evolves_to[0].species.name
     )
 
-    // console.log("SECOND POKEMON\n\n\n", secondEvolutionPokemon)
-
-    /**
-     * TODO:
-     * Fix the error here. Going to aurorus, phantump causes an error at line 93.
-     * Has to do with the fact that some pokemon do not have an `evolution_chain`.
-     * Error branching necessary. Maybe create an error-boundary component.
-     * - research error-boundaries in remix
-     */
     // third evolution
-    if (evolutionChain.chain.evolves_to[0].evolves_to.length !== 0) {
+    if (pokemonHasThirdEvolution(evolutionChain)) {
         const thirdEvolutionPokemon = await getPokemonByName(
             evolutionChain.chain.evolves_to[0].evolves_to[0].species.name
         )
@@ -155,6 +118,20 @@ export async function getPokemonWithEvolutions(
         second: secondEvolutionPokemon,
         third: null
     }
+}
+
+export async function getEeveeLikePokemonEvolutions(
+    evolutionChain: PokemonEvolutionChain,
+): Promise<Pokemon[]> {
+    const names = await getEvolutionNames(evolutionChain)
+    const pokemons: Pokemon[] = await Promise.all(
+        names.map(async (name) => {
+            return await getPokemonByName(name)
+        })
+    )
+    // adds the first evolution to the list.
+    pokemons.push(await getPokemonByName(evolutionChain.chain.species.name))
+    return pokemons
 }
 
 export async function getEvolutionNames(evolutionChain: PokemonEvolutionChain) {

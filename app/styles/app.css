@@ -579,6 +579,16 @@ video {
   margin-bottom: 2rem;
 }
 
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .mb-8 {
   margin-bottom: 2rem;
 }
@@ -611,6 +621,10 @@ video {
   min-width: 100%;
 }
 
+.min-w-\[170px\] {
+  min-width: 170px;
+}
+
 .max-w-5xl {
   max-width: 64rem;
 }
@@ -632,17 +646,24 @@ video {
   max-width: 28rem;
 }
 
-.max-w-xs {
-  max-width: 20rem;
+.max-w-\[30px\] {
+  max-width: 30px;
 }
 
-.max-w-xl {
-  max-width: 36rem;
+.max-w-\[80px\] {
+  max-width: 80px;
 }
 
-.max-w-fit {
-  max-width: -moz-fit-content;
-  max-width: fit-content;
+.max-w-\[100px\] {
+  max-width: 100px;
+}
+
+.max-w-\[180px\] {
+  max-width: 180px;
+}
+
+.max-w-\[170px\] {
+  max-width: 170px;
 }
 
 .grid-cols-2 {
@@ -899,6 +920,21 @@ video {
   padding-right: 0.25rem;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -913,6 +949,26 @@ video {
 
 .pb-12 {
   padding-bottom: 3rem;
+}
+
+.pr-4 {
+  padding-right: 1rem;
+}
+
+.pr-8 {
+  padding-right: 2rem;
+}
+
+.pr-16 {
+  padding-right: 4rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
 }
 
 .text-center {
@@ -948,12 +1004,21 @@ video {
   line-height: 1;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-light {
   font-weight: 300;
 }
 
 .font-extrabold {
   font-weight: 800;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .capitalize {
@@ -1034,14 +1099,6 @@ video {
   margin-left: auto;
 }
 
-.last\:place-self-center:last-child {
-  place-self: center;
-}
-
-.last\:self-center:last-child {
-  align-self: center;
-}
-
 .hover\:bg-ctp-overlay1:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(var(--ctp-overlay1), var(--tw-bg-opacity));
@@ -1050,6 +1107,11 @@ video {
 .hover\:bg-ctp-overlay0:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(var(--ctp-overlay0), var(--tw-bg-opacity));
+}
+
+.hover\:bg-ctp-surface2:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(var(--ctp-surface2), var(--tw-bg-opacity));
 }
 
 .hover\:shadow-lg:hover {
