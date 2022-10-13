@@ -14,39 +14,24 @@ import {
 type ReturnData = {
     pokemon: Awaited<ReturnType<typeof getPokemonByName>>
     evolutions: Awaited<ReturnType<typeof getPokemonWithEvolutions>>
-    // moves: Awaited<ReturnType<typeof getMoveByName>>[]
 }
 
 type LoaderData = ReturnData
 
 export const loader: LoaderFunction = async ({ request, context, params }) => {
     const pokemon = await getPokemonByName(params.pokemonName)
-    // console.log("\n\npokemon.species.url - from LOADER: ", pokemon.species.url)
-
     const evolutions = await getPokemonWithEvolutions(pokemon)
-
-    // console.log("\n\nevolution from LOADER: ", evolutions, "\n\n")
-    // const moves: Move[] = await Promise.all(
-    //     pokemon.moves.map(async (move, idx) => {
-    //         return await getMoveByName(move.move.name)
-    //     })
-    // )
 
     return json<LoaderData>({
         pokemon,
         evolutions
-        // moves
     })
 }
 
 export default function Pokemon() {
     const { pokemon } = useLoaderData<typeof loader>()
-    // console.log(pokemon)
-
     const { evolutions } = useLoaderData<typeof loader>()
-    // console.log(pokemon.name, evolutions)
-    const { moves } = useLoaderData<typeof loader>()
-    console.log(moves)
+
     const isOnlyEvolution = !!evolutions.first && !evolutions.second
     const hasEvolutions = !!evolutions.second
 
@@ -55,6 +40,7 @@ export default function Pokemon() {
     const name: PokemonType["name"] = pokemon.name
     const abilities: PokemonType["abilities"] = pokemon.abilities
     const types: PokemonType["types"] = pokemon.types
+    const moves: PokemonType["moves"] = pokemon.moves
 
     const relatedRoutes = useMatches()
     const pokemons = relatedRoutes[1].data
@@ -153,7 +139,12 @@ export default function Pokemon() {
             {/* TODO: Create a 'moves' UI component. */}
             <div>
                 <h2 className="text-2xl">Moves</h2>
-                {/* <div><PokemonMoves moves={moves} /></div> */}
+                {moves.map((move, idx) => (
+                    <p className="" key={idx}>
+                        {/* TODO: Create a dedicated UI component */}
+                        {move.move.name}
+                    </p>
+                ))}
             </div>
         </div>
     )
