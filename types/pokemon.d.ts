@@ -6,6 +6,10 @@ export type PokemonEvolutions = {
     third: Pokemon | null
 }
 
+export type PokemonBase = {
+    name: Pokemon["name"]
+    url: Url
+}
 export type PokemonEeveevolutions = Pokemon[]
 
 export type Pokemon = {

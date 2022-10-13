@@ -1,6 +1,7 @@
 import { Url } from "types/global"
 import type {
     Pokemon,
+    PokemonBase,
     PokemonEeveevolutions,
     PokemonEvolutions,
     PokemonSpecies
@@ -13,13 +14,9 @@ import {
     pokemonIsUrshifu
 } from "~/utils/pokemonFilters"
 
-export type PokemonBase = {
-    name: Pokemon["name"]
-    url: Url
-}
 export async function getAllPokemons(): Promise<PokemonBase[]> {
     const res = await fetch(
-        "https://pokeapi.co/api/v2/pokemon?limit=905&offset=0"
+        "https://pokeapi.co/api/v2/pokemon?limit=90&offset=0"
     )
     const data = await res.json()
 
@@ -35,7 +32,7 @@ export async function getPokemonByName(
     return pokemon
 }
 
-export async function getPokemonsByNames(
+export async function getPokemonsByBases(
     pokemonBases: PokemonBase[]
 ): Promise<Pokemon[]> {
     const maxLength = 10

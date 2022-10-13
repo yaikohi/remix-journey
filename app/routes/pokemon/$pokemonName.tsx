@@ -1,22 +1,18 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { Link, useLoaderData, useMatches } from "@remix-run/react"
-import type { Move, PokemonStat, Pokemon as PokemonType } from "types/pokemon"
+import type { PokemonStat, Pokemon as PokemonType } from "types/pokemon"
 import PokemonEeveeVolutions from "~/components/pokemon-eevee-volution"
 import PokemonEvolutionChain from "~/components/pokemon-evolution"
-import PokemonMoves from "~/components/pokemon-moves"
-import { getMoveByName } from "~/models/pokemon-moves.server"
 import {
     getPokemonByName,
     getPokemonWithEvolutions
 } from "~/models/pokemon.server"
 
-type ReturnData = {
+type LoaderData = {
     pokemon: Awaited<ReturnType<typeof getPokemonByName>>
     evolutions: Awaited<ReturnType<typeof getPokemonWithEvolutions>>
 }
-
-type LoaderData = ReturnData
 
 export const loader: LoaderFunction = async ({ request, context, params }) => {
     const pokemon = await getPokemonByName(params.pokemonName)
@@ -43,29 +39,31 @@ export default function Pokemon() {
     const moves: PokemonType["moves"] = pokemon.moves
 
     const relatedRoutes = useMatches()
-    const pokemons = relatedRoutes[1].data
-    const currentPokemonIndex: number = relatedRoutes[1].data?.findIndex(
-        (pokeman: PokemonType) => pokeman.name === pokemon.name
-    )
-    const nextPokemonIndex =
-        currentPokemonIndex === pokemons.length - 1
-            ? 0
-            : currentPokemonIndex + 1
-    const prevPokemonIndex =
-        currentPokemonIndex === 0
-            ? pokemons.length - 1
-            : currentPokemonIndex - 1
+    console.log(relatedRoutes)
 
-    const nextPokemonName = pokemons[nextPokemonIndex]?.name
-    const prevPokemonName = pokemons[prevPokemonIndex]?.name
+    // const pokemons = relatedRoutes[1].data
+    // const currentPokemonIndex: number = relatedRoutes[1].data?.findIndex(
+    //     (pokeman: PokemonType) => pokeman.name === pokemon.name
+    // )
+    // const nextPokemonIndex =
+    //     currentPokemonIndex === pokemons.length - 1
+    //         ? 0
+    //         : currentPokemonIndex + 1
+    // const prevPokemonIndex =
+    //     currentPokemonIndex === 0
+    //         ? pokemons.length - 1
+    //         : currentPokemonIndex - 1
 
-    const nextPokemonRoute = `${relatedRoutes[1].pathname}/${nextPokemonName}`
-    const prevPokemonRoute = `${relatedRoutes[1].pathname}/${prevPokemonName}`
+    // const nextPokemonName = pokemons[nextPokemonIndex]?.name
+    // const prevPokemonName = pokemons[prevPokemonIndex]?.name
+
+    // const nextPokemonRoute = `${relatedRoutes[1].pathname}/${nextPokemonName}`
+    // const prevPokemonRoute = `${relatedRoutes[1].pathname}/${prevPokemonName}`
 
     return (
         <div className="grid grid-cols-3 gap-10 capitalize">
             <div className="flex justify-center col-span-3 align-middle bg-ctp-surface0">
-                <Link
+                {/* <Link
                     className="self-center p-2 m-4 bg-ctp-overlay0 hover:bg-ctp-overlay1 rounded-xl"
                     to={prevPokemonRoute}
                 >
@@ -77,7 +75,7 @@ export default function Pokemon() {
                     to={nextPokemonRoute}
                 >
                     Next ({nextPokemonName})
-                </Link>
+                </Link> */}
             </div>
 
             <div className="bg-ctp-surface0">

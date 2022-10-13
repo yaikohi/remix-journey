@@ -1,26 +1,20 @@
-import type { LoaderFunction } from "@remix-run/node"
-import { Link, useLoaderData, useOutletContext } from "@remix-run/react"
-import type { Url } from "types/global"
+import { Link, useOutletContext } from "@remix-run/react"
 import { PokemonInfo } from "~/components/pokemon-info/pokemon-info"
-import { getPokemonById } from "~/models/pokemon.server"
-
-export const loader: LoaderFunction = async ({ request, context, params }) => {
-    const ID = Math.floor(Math.random() * (905 - 0) + 0)
-
-    const pokemonOfTheDay = await getPokemonById(ID)
-
-    return pokemonOfTheDay
-}
+import type { ContextType } from "../pokemon"
 
 export default function PokemonOverview() {
-    const pokemonOfTheDay = useLoaderData()
-    const pokemons = useOutletContext<{ name: string; url: Url }[]>()
+    const { pokemonBases, pokemons } = useOutletContext<ContextType>()
+
+    const pokemonOfTheDay = pokemons[0]
+    console.log("pokemonBases", pokemonBases)
+    console.log("pokemonOfTheDay", pokemonOfTheDay)
+
     return (
         <>
-            <h2 className="text-xl">Todays Pokemon: {pokemonOfTheDay.name} </h2>
+            <h2 className="text-xl">Todays Pokemon: {pokemonOfTheDay.name}</h2>
             <PokemonInfo pokemon={pokemonOfTheDay} />
             <div className="grid grid-cols-3">
-                {pokemons.slice(250, 274).map((pokemon, idx) => (
+                {pokemonBases.slice(0, 7).map((pokemon, idx) => (
                     <Link
                         className="p-2 m-2 font-bold text-center rounded-lg bg-ctp-overlay0"
                         to={`/pokemon/${pokemon.name}`}

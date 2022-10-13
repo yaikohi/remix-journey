@@ -1,26 +1,28 @@
+import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { Outlet, useLoaderData } from "@remix-run/react"
 import { Navbar, routes } from "~/components/navbar"
-import { getAllPokemons, getPokemonsByNames } from "~/models/pokemon.server"
+import { getAllPokemons, getPokemonsByBases } from "~/models/pokemon.server"
 
-type LoaderData = Awaited<
-    ReturnType<typeof getAllPokemons | typeof getPokemonsByNames>
->
+type LoaderData = Awaited<{
+    pokemonBases: Awaited<ReturnType<typeof getAllPokemons>>
+    pokemons: Awaited<ReturnType<typeof getPokemonsByBases>>
+}>
+export type ContextType = {
+    pokemonBases: Awaited<ReturnType<typeof getAllPokemons>>
+    pokemons: Awaited<ReturnType<typeof getPokemonsByBases>>
+}
+export const loader: LoaderFunction = async () => {
+    const pokemonBases = await getAllPokemons()
+    const pokemons = await getPokemonsByBases(pokemonBases.slice(15, 90))
 
-export const loader = async () => {
-    const data = await getAllPokemons()
-    const pokemons = await getPokemonsByNames(data.slice(200, 299))
-
-    if (pokemons && pokemons && pokemons.length !== 0) {
-        return json<LoaderData>(pokemons)
-    }
-
-    return json(data)
+    return json<LoaderData>({ pokemonBases, pokemons })
 }
 
 export default function Pokemon() {
-    const data = useLoaderData()
+    const data = useLoaderData<ReturnType<typeof loader>>()
     console.log(data)
+
     return (
         <>
             <div className="p-3 bg-ctp-crust">
