@@ -1,6 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { Outlet, useLoaderData } from "@remix-run/react"
+import { PokemonBase } from "types/pokemon"
 import { Navbar, routes } from "~/components/navbar"
 import { getAllPokemons, getPokemonsByBases } from "~/models/pokemon.server"
 
@@ -14,7 +15,15 @@ export type ContextType = {
 }
 export const loader: LoaderFunction = async () => {
     const pokemonBases = await getAllPokemons()
-    const pokemons = await getPokemonsByBases(pokemonBases.slice(15, 90))
+    const getRandomPokemons = (
+        pokemonArray: PokemonBase[],
+        maxLength: number
+    ): PokemonBase[] => {
+        return pokemonArray.sort(() => 0.5 - Math.random()).slice(0, maxLength)
+    }
+    const pokemons = await getPokemonsByBases(
+        getRandomPokemons(pokemonBases, 9)
+    )
 
     return json<LoaderData>({ pokemonBases, pokemons })
 }
