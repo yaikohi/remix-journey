@@ -12,7 +12,7 @@ export default function PokemonOverview() {
 
     return (
         <>
-            <h2 className="text-xl">Todays Pokemon: {pokemonOfTheDay.name}</h2>
+            <h2 className="text-2xl">Todays Pokemon</h2>
             <PokemonInfo pokemon={pokemonOfTheDay} />
             <div className="grid grid-cols-3">
                 {pokemons.map((pokemon, idx) => (
