@@ -41,29 +41,29 @@ export default function Pokemon() {
     const relatedRoutes = useMatches()
     console.log(relatedRoutes)
 
-    // const pokemons = relatedRoutes[1].data
-    // const currentPokemonIndex: number = relatedRoutes[1].data?.findIndex(
-    //     (pokeman: PokemonType) => pokeman.name === pokemon.name
-    // )
-    // const nextPokemonIndex =
-    //     currentPokemonIndex === pokemons.length - 1
-    //         ? 0
-    //         : currentPokemonIndex + 1
-    // const prevPokemonIndex =
-    //     currentPokemonIndex === 0
-    //         ? pokemons.length - 1
-    //         : currentPokemonIndex - 1
+    const pokemons = relatedRoutes[1].data.pokemons
+    const currentPokemonIndex: number = pokemons.findIndex(
+        (pokeman: PokemonType) => pokeman.name === pokemon.name
+    )
+    const nextPokemonIndex =
+        currentPokemonIndex === pokemons.length - 1
+            ? 0
+            : currentPokemonIndex + 1
+    const prevPokemonIndex =
+        currentPokemonIndex === 0
+            ? pokemons.length - 1
+            : currentPokemonIndex - 1
 
-    // const nextPokemonName = pokemons[nextPokemonIndex]?.name
-    // const prevPokemonName = pokemons[prevPokemonIndex]?.name
+    const nextPokemonName = pokemons[nextPokemonIndex]?.name
+    const prevPokemonName = pokemons[prevPokemonIndex]?.name
 
-    // const nextPokemonRoute = `${relatedRoutes[1].pathname}/${nextPokemonName}`
-    // const prevPokemonRoute = `${relatedRoutes[1].pathname}/${prevPokemonName}`
+    const nextPokemonRoute = `${relatedRoutes[1].pathname}/${nextPokemonName}`
+    const prevPokemonRoute = `${relatedRoutes[1].pathname}/${prevPokemonName}`
 
     return (
         <div className="grid grid-cols-3 gap-10 capitalize">
             <div className="flex justify-center col-span-3 align-middle bg-ctp-surface0">
-                {/* <Link
+                <Link
                     className="self-center p-2 m-4 bg-ctp-overlay0 hover:bg-ctp-overlay1 rounded-xl"
                     to={prevPokemonRoute}
                 >
@@ -75,7 +75,7 @@ export default function Pokemon() {
                     to={nextPokemonRoute}
                 >
                     Next ({nextPokemonName})
-                </Link> */}
+                </Link>
             </div>
 
             <div className="bg-ctp-surface0">
