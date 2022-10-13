@@ -1,5 +1,4 @@
 import type { LoaderFunction } from "@remix-run/node"
-import { json } from "@remix-run/node"
 import { Link, useLoaderData, useOutletContext } from "@remix-run/react"
 import type { Url } from "types/global"
 import { PokemonInfo } from "~/components/pokemon-info/pokemon-info"
@@ -10,7 +9,7 @@ export const loader: LoaderFunction = async ({ request, context, params }) => {
 
     const pokemonOfTheDay = await getPokemonById(ID)
 
-    return json(pokemonOfTheDay)
+    return pokemonOfTheDay
 }
 
 export default function PokemonOverview() {

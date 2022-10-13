@@ -1,3 +1,4 @@
+import { Url } from "types/global"
 import type {
     Pokemon,
     PokemonEeveevolutions,
@@ -12,9 +13,11 @@ import {
     pokemonIsUrshifu
 } from "~/utils/pokemonFilters"
 
-export async function getAllPokemons(): Promise<
-    { name: Pokemon["name"]; url: string }[]
-> {
+export type PokemonBase = {
+    name: Pokemon["name"]
+    url: Url
+}
+export async function getAllPokemons(): Promise<PokemonBase[]> {
     const res = await fetch(
         "https://pokeapi.co/api/v2/pokemon?limit=905&offset=0"
     )
@@ -24,7 +27,7 @@ export async function getAllPokemons(): Promise<
 }
 
 export async function getPokemonByName(
-    name: string | undefined
+    name: Pokemon["name"] | undefined
 ): Promise<Pokemon> {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     const pokemon: Pokemon = await res.json()
@@ -32,16 +35,44 @@ export async function getPokemonByName(
     return pokemon
 }
 
-export async function getPokemonById(
-    id: string | number
-): Promise<Pokemon>{
+export async function getPokemonsByNames(
+    pokemonBases: PokemonBase[]
+): Promise<Pokemon[]> {
+    const maxLength = 10
+
+    if (pokemonBases.length > maxLength) {
+        const pokemonPromises = pokemonBases
+            .slice(0, maxLength)
+            .map(async (pokemonBase) => {
+                const pokemon = await fetch(pokemonBase.url)
+                return pokemon.json()
+            })
+        const pokemons: Pokemon[] = await Promise.all(pokemonPromises)
+
+        return pokemons
+    }
+
+    const pokemonPromises = pokemonBases.map(async (pokemonBase) => {
+        const pokemon = await fetch(pokemonBase.url)
+        return pokemon.json()
+    })
+    const pokemons: Pokemon[] = await Promise.all(pokemonPromises)
+
+    console.log(pokemons)
+
+    return pokemons
+}
+
+export async function getPokemonById(id: string | number): Promise<Pokemon> {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
     const pokemon: Pokemon = await res.json()
 
     return pokemon
 }
 
-async function getPokemonSpecies(pokemon: Pokemon): Promise<PokemonSpecies> {
+export async function getPokemonSpecies(
+    pokemon: Pokemon
+): Promise<PokemonSpecies> {
     const res = await fetch(pokemon.species.url)
     const pokemonSpecies = await res.json()
 
@@ -130,7 +161,7 @@ export async function getPokemonWithEvolutions(
 }
 
 export async function getEeveeLikePokemonEvolutions(
-    evolutionChain: PokemonEvolutionChain,
+    evolutionChain: PokemonEvolutionChain
 ): Promise<Pokemon[]> {
     const names = await getEvolutionNames(evolutionChain)
     const pokemons: Pokemon[] = await Promise.all(
