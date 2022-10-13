@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react"
 import type { Pokemon } from "types/pokemon"
 import { getTypeColorFromMap } from "~/utils/pokemonTypeColorMap"
 
@@ -72,25 +73,30 @@ export const PokemonInfo = ({ pokemon }: { pokemon: Pokemon }) => {
         (ability) => ability.ability.name
     )
     return (
-        <div className="flex flex-col items-center m-2 bg-ctp-surface0 rounded-xl hover:shadow-lg">
-            <h3 className="py-2 text-4xl font-extrabold capitalize max-w-min">
-                {pokemon.name}
-            </h3>
-            <div className="px-1 pt-4">
-                <TypeTags types={pokemon.types} />
-            </div>
-            <div className="self-center mt-8">
-                <img
-                    src={
-                        pokemon?.sprites?.other["official-artwork"]
-                            .front_default
-                            ? pokemon?.sprites?.other["official-artwork"]
-                                  .front_default
-                            : ""
-                    }
-                    alt={`Sprite of ${pokemon.name}`}
-                />
-            </div>
+        <div className="max-w-sm m-2 bg-ctp-surface0 rounded-xl hover:shadow-lg">
+            <Link to={`/pokemon/${pokemon.name}`}>
+                <div className="flex flex-col items-center m-2">
+                    <h3 className="py-2 text-4xl font-extrabold capitalize max-w-min">
+                        {pokemon.name}
+                    </h3>
+                    <div className="px-1 pt-4">
+                        <TypeTags types={pokemon.types} />
+                    </div>
+                    <div className="self-center mt-8">
+                        <img
+                            src={
+                                pokemon?.sprites?.other["official-artwork"]
+                                    .front_default
+                                    ? pokemon?.sprites?.other[
+                                          "official-artwork"
+                                      ].front_default
+                                    : ""
+                            }
+                            alt={`Sprite of ${pokemon.name}`}
+                        />
+                    </div>
+                </div>
+            </Link>
             <DataList>
                 <DataItem title={"height (dm)"} content={pokemon.height} />
                 <DataItem title={"weight (hg)"} content={pokemon.weight} />

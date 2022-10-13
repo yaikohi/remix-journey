@@ -39,7 +39,6 @@ export default function Pokemon() {
     const moves: PokemonType["moves"] = pokemon.moves
 
     const relatedRoutes = useMatches()
-    console.log(relatedRoutes)
 
     const pokemons = relatedRoutes[1].data.pokemons
     const currentPokemonIndex: number = pokemons.findIndex(
