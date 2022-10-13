@@ -1,14 +1,11 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { Link, useLoaderData, useOutletContext } from "@remix-run/react"
-import { renderToStaticNodeStream } from "react-dom/server"
 import type { Url } from "types/global"
 import { PokemonInfo } from "~/components/pokemon-info/pokemon-info"
 import { getPokemonById } from "~/models/pokemon.server"
 
 export const loader: LoaderFunction = async ({ request, context, params }) => {
-    const URL = "https://pokeapi.co/api/v2/pokemon/"
-
     const ID = Math.floor(Math.random() * (905 - 0) + 0)
 
     const pokemonOfTheDay = await getPokemonById(ID)

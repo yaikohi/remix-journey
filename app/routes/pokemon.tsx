@@ -20,6 +20,7 @@ export default function Pokemon() {
             </div>
             <Navbar routes={routes} />
             <div className="flex flex-col items-center max-w-4xl p-24 mx-auto">
+                
                 <Outlet context={data} />
             </div>
         </>
