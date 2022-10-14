@@ -2,6 +2,7 @@ import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { Link, useLoaderData, useMatches } from "@remix-run/react"
 import type { PokemonStat, Pokemon as PokemonType } from "types/pokemon"
+import Pagination from "~/components/pagination"
 import PokemonEeveeVolutions from "~/components/pokemon-eevee-volution"
 import PokemonEvolutionChain from "~/components/pokemon-evolution"
 import {
@@ -61,20 +62,12 @@ export default function Pokemon() {
 
     return (
         <div className="grid grid-cols-3 gap-10 capitalize">
+            <Pagination
+                relatedRoutes={relatedRoutes}
+                currentRoute={pokemon.name}
+            />
             <div className="flex justify-center col-span-3 align-middle bg-ctp-surface0">
-                <Link
-                    className="self-center p-2 m-4 bg-ctp-overlay0 hover:bg-ctp-overlay1 rounded-xl"
-                    to={prevPokemonRoute}
-                >
-                    back ({prevPokemonName})
-                </Link>
                 <h1 className="p-2 m-4 text-5xl font-extrabold">{name}</h1>
-                <Link
-                    className="self-center p-2 m-4 bg-ctp-overlay0 hover:bg-ctp-overlay1 rounded-xl"
-                    to={nextPokemonRoute}
-                >
-                    Next ({nextPokemonName})
-                </Link>
             </div>
 
             <div className="bg-ctp-surface0">

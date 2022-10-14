@@ -1,9 +1,9 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { Outlet, useLoaderData } from "@remix-run/react"
-import { PokemonBase } from "types/pokemon"
 import { Navbar, routes } from "~/components/navbar"
 import { getAllPokemons, getPokemonsByBases } from "~/models/pokemon.server"
+import { shuffleArray } from "~/utils/shuffle"
 
 type LoaderData = Awaited<{
     pokemonBases: Awaited<ReturnType<typeof getAllPokemons>>
@@ -15,22 +15,15 @@ export type ContextType = {
 }
 export const loader: LoaderFunction = async () => {
     const pokemonBases = await getAllPokemons()
-    const getRandomPokemons = (
-        pokemonArray: PokemonBase[],
-        maxLength: number
-    ): PokemonBase[] => {
-        return pokemonArray.sort(() => 0.5 - Math.random()).slice(0, maxLength)
-    }
-    const pokemons = await getPokemonsByBases(
-        getRandomPokemons(pokemonBases, 9)
-    )
+    const randomizedPokemonBases = shuffleArray(pokemonBases)
+
+    const pokemons = await getPokemonsByBases(randomizedPokemonBases)
 
     return json<LoaderData>({ pokemonBases, pokemons })
 }
 
 export default function Pokemon() {
     const data = useLoaderData<ReturnType<typeof loader>>()
-    console.log(data)
 
     return (
         <>
@@ -38,7 +31,7 @@ export default function Pokemon() {
                 <h1 className="text-7xl">Pokemon</h1>
             </div>
             <Navbar routes={routes} />
-            <div className="flex flex-col items-center max-w-4xl p-24 mx-auto">
+            <div className="flex flex-col items-center p-12 mx-auto lg:max-w-[1800px]">
                 <Outlet context={data} />
             </div>
         </>

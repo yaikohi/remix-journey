@@ -57,10 +57,11 @@ const DataItems = ({
         <>
             <dt className="font-light lowercase text-ctp-subtext1">{title}</dt>
             <div>
-                {content.map((contentItem) => (
-                    <>
-                        <dd className="text-ctp-text">{`${contentItem}`}</dd>
-                    </>
+                {content.map((contentItem, idx) => (
+                    <dd
+                        key={idx}
+                        className="text-ctp-text"
+                    >{`${contentItem}`}</dd>
                 ))}
             </div>
         </>
