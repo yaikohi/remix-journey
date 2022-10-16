@@ -39,33 +39,33 @@ export default function Pokemon() {
     const types: PokemonType["types"] = pokemon.types
     const moves: PokemonType["moves"] = pokemon.moves
 
-    const relatedRoutes = useMatches()
+    // const relatedRoutes = useMatches()
 
-    const pokemons = relatedRoutes[1].data.pokemons
-    const currentPokemonIndex: number = pokemons.findIndex(
-        (pokeman: PokemonType) => pokeman.name === pokemon.name
-    )
-    const nextPokemonIndex =
-        currentPokemonIndex === pokemons.length - 1
-            ? 0
-            : currentPokemonIndex + 1
-    const prevPokemonIndex =
-        currentPokemonIndex === 0
-            ? pokemons.length - 1
-            : currentPokemonIndex - 1
+    // const pokemons = relatedRoutes[1].data.pokemons
+    // const currentPokemonIndex: number = pokemons.findIndex(
+    //     (pokeman: PokemonType) => pokeman.name === pokemon.name
+    // )
+    // const nextPokemonIndex =
+    //     currentPokemonIndex === pokemons.length - 1
+    //         ? 0
+    //         : currentPokemonIndex + 1
+    // const prevPokemonIndex =
+    //     currentPokemonIndex === 0
+    //         ? pokemons.length - 1
+    //         : currentPokemonIndex - 1
 
-    const nextPokemonName = pokemons[nextPokemonIndex]?.name
-    const prevPokemonName = pokemons[prevPokemonIndex]?.name
+    // const nextPokemonName = pokemons[nextPokemonIndex]?.name
+    // const prevPokemonName = pokemons[prevPokemonIndex]?.name
 
-    const nextPokemonRoute = `${relatedRoutes[1].pathname}/${nextPokemonName}`
-    const prevPokemonRoute = `${relatedRoutes[1].pathname}/${prevPokemonName}`
+    // const nextPokemonRoute = `${relatedRoutes[1].pathname}/${nextPokemonName}`
+    // const prevPokemonRoute = `${relatedRoutes[1].pathname}/${prevPokemonName}`
 
     return (
         <div className="grid grid-cols-3 gap-10 capitalize">
-            <Pagination
+            {/* <Pagination
                 relatedRoutes={relatedRoutes}
                 currentRoute={pokemon.name}
-            />
+            /> */}
             <div className="flex justify-center col-span-3 align-middle bg-ctp-surface0">
                 <h1 className="p-2 m-4 text-5xl font-extrabold">{name}</h1>
             </div>

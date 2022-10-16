@@ -78,16 +78,16 @@ interface Sprites {
 
 type SpritesOther = {
     dream_world: {
-        front_default: string | null
-        front_female: string | null
+        front_default: string | undefined
+        front_female: string | undefined
     }
     home: {
-        front_default: string | null
-        front_female: string | null
+        front_default: string | undefined
+        front_female: string | undefined
     }
     "official-artwork": {
-        front_default: string | null
-        front_female: string | null
+        front_default: string | undefined
+        front_female: string | undefined
     }
 }
 
@@ -164,6 +164,7 @@ export type PokemonType = {
 }
 
 export type Type = {
+    type: any
     name: PokemonTypeNames
     url: string
 }

@@ -1,38 +1,45 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String   @id @default(uuid())
-  createAt      DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  username      String   @unique
-  passwordHash  String
-  favoriteBerry Berry?   @relation(fields: [berryId], references: [id])
-  berryId       Int
-}
-
-model Berry {
-  id        Int      @id
-  createAt  DateTime @default(now())
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User[]
-  name      String
-  flavors   Flavor[]
+  // pokemonCollections PokemonCollection[]
 }
 
-model Flavor {
-  id      String @id @default(uuid())
-  name    String
-  potency Int
-  Berry   Berry? @relation(fields: [berryId], references: [id])
-  berryId Int?
+// model PokemonCollection {
+//   id        String    @id @default(cuid())
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+//   name      String
+//   authorId  String
+//   author    User      @relation(fields: [authorId], references: [id])
+//   pokemons  Pokemon[]
+// }
+
+model Pokemon {
+  id                     String   @id @default(cuid())
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  name                   String
+  sprite                 String
+  image                  String
+  weight                 Int
+  height                 Int
+  hpBaseStat             Int
+  attackBaseStat         Int
+  defenseBaseStat        Int
+  specialAttackBaseStat  Int
+  specialDefenseBaseStat Int
+  speedBaseStat          Int
+  types                  String[]
+  pokedexId              Int
+  // collections            PokemonCollection[]
 }

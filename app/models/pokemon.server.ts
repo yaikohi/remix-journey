@@ -35,7 +35,7 @@ export async function getPokemonByName(
 export async function getPokemonsByBases(
     pokemonBases: PokemonBase[]
 ): Promise<Pokemon[]> {
-    const maxLength = 10
+    const maxLength = 100
 
     if (pokemonBases.length > maxLength) {
         const pokemonPromises = pokemonBases
