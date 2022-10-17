@@ -3,6 +3,27 @@ import type { CTPBgColors } from "./CTPTailwindColors"
 
 type CTPPOKEMONMAPITEM = [PokemonTypeNames, CTPBgColors]
 
+export const pokemonTypes: PokemonTypeNames[] = [
+    "normal",
+    "fire",
+    "water",
+    "grass",
+    "electric",
+    "ice",
+    "fighting",
+    "poison",
+    "ground",
+    "flying",
+    "psychic",
+    "bug",
+    "rock",
+    "ghost",
+    "dark",
+    "dragon",
+    "steel",
+    "fairy"
+]
+
 const ctpPokemonArr: CTPPOKEMONMAPITEM[] = [
     ["normal", "bg-ctp-rosewater"],
     ["fire", "bg-ctp-red"],

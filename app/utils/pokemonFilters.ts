@@ -1,6 +1,7 @@
-import { Pokemon } from "types/pokemon"
+import { Pokemon } from "@prisma/client"
+import type { Pokemon as PokeApiPokemon } from "types/pokemon"
 import type { PokemonEvolutionChain } from "types/pokemonEvolutionChain"
-import { getEvolutionNames } from "~/models/pokemon.server"
+import { getEvolutionNames } from "~/models/pokemon-pokeapi.server"
 
 export function pokemonIsEeveeLike(
     evolutionChain: PokemonEvolutionChain
@@ -35,4 +36,8 @@ export function pokemonIsUrshifu(
     evolutionChain: PokemonEvolutionChain
 ): boolean {
     return evolutionChain.chain.evolves_to[0].species.name === "urshifu"
+}
+
+export function pokemonHasMultipleTypes(pokemon: Pokemon): boolean {
+    return pokemon.types.length > 1
 }

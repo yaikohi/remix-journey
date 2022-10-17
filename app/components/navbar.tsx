@@ -41,7 +41,7 @@ export const Navbar = ({ routes }: NavbarProps) => {
         <ul className="flex flex-row items-center w-full gap-2">
           {routes.map((route, idx) => (
             <li
-              className="text-ctp-rosewater first:mx-4 first:px-2 first:py-1 first:bg-ctp-surface1 first:rounded-xl last:ml-auto"
+              className="text-ctp-rosewater first:mx-4 first:px-2 first:py-1 first:bg-ctp-surface1 first:rounded-xl last:ml-auto last:mr-8"
               key={idx}
             >
               <NavbarLink to={route.to} text={route.text} />

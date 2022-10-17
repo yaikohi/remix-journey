@@ -1,14 +1,14 @@
 import { Link, Outlet, useOutletContext } from "@remix-run/react"
 
-export default function User() {
+export default function InsightsRoute() {
     const data = useOutletContext() as any
     const { user } = data
     return (
         <>
             <div className="p-3 bg-ctp-crust">
-                <h1 className="text-7xl">User</h1>
+                <h1 className="text-7xl">Insight</h1>
             </div>
-            <div className="flex flex-col items-center max-w-4xl p-24 mx-auto">
+            <div className="flex flex-col items-center p-24 mx-auto">
                 {user ? (
                     <Outlet context={data} />
                 ) : (

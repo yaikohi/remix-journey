@@ -8,7 +8,7 @@ import PokemonEvolutionChain from "~/components/pokemon-evolution"
 import {
     getPokemonByName,
     getPokemonWithEvolutions
-} from "~/models/pokemon.server"
+} from "~/models/pokemon-pokeapi.server"
 
 type LoaderData = {
     pokemon: Awaited<ReturnType<typeof getPokemonByName>>

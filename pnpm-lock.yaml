@@ -9,10 +9,12 @@ specifiers:
   '@remix-run/react': ^1.7.2
   '@remix-run/serve': ^1.7.2
   '@remix-run/vercel': ^1.7.2
+  '@types/bcryptjs': ^2.4.2
   '@types/react': ^18.0.21
   '@types/react-dom': ^18.0.6
   '@vercel/node': ^2.5.22
   autoprefixer: ^10.4.12
+  bcryptjs: ^2.4.3
   concurrently: ^7.4.0
   eslint: ^8.25.0
   postcss: ^8.4.17
@@ -28,6 +30,7 @@ dependencies:
   '@remix-run/react': 1.7.2_biqbaboplfbrettd7655fr4n2y
   '@remix-run/vercel': 1.7.2_fy6gzvia6mfv256vvk7cjzqzfe
   '@vercel/node': 2.5.22
+  bcryptjs: 2.4.3
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
 
@@ -36,6 +39,7 @@ devDependencies:
   '@remix-run/dev': 1.7.2_63cxfdg5f5bb4xpkk3vcjfcl3q
   '@remix-run/eslint-config': 1.7.2_ceius3krcep667lesqygbylwku
   '@remix-run/serve': 1.7.2_biqbaboplfbrettd7655fr4n2y
+  '@types/bcryptjs': 2.4.2
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
   autoprefixer: 10.4.12_postcss@8.4.17
@@ -1843,6 +1847,10 @@ packages:
     resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
     dev: true
 
+  /@types/bcryptjs/2.4.2:
+    resolution: {integrity: sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ==}
+    dev: true
+
   /@types/cacheable-request/6.0.2:
     resolution: {integrity: sha512-B3xVo+dlKM6nnKTcmm5ZtY/OL8bOAOd2Olee9M1zft65ox50OzjEHW91sDiU9j6cvW8Ejg1/Qkf4xd2kugApUA==}
     dependencies:
@@ -2471,6 +2479,10 @@ packages:
     dependencies:
       safe-buffer: 5.1.2
     dev: true
+
+  /bcryptjs/2.4.3:
+    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
+    dev: false
 
   /big.js/5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
