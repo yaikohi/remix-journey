@@ -1,4 +1,4 @@
-import type { Pokemon, PokemonType } from "types/pokemon"
+import type { Pokemon, PokemonType } from "types/pokemon-pokeapi"
 import { prisma } from "./prisma.server"
 
 export async function addPokemonToDb(pokemon: Pokemon) {

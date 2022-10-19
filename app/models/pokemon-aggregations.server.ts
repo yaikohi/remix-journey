@@ -1,4 +1,4 @@
-import type { PokemonTypeNames } from "types/pokemon"
+import type { PokemonTypeNames } from "types/pokemon-pokeapi"
 import { prisma } from "./prisma.server"
 
 /**

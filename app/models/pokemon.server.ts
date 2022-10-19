@@ -1,5 +1,5 @@
 import type { Pokemon } from "@prisma/client"
-import type { PokemonTypeNames } from "types/pokemon"
+import type { PokemonTypeNames } from "types/pokemon-pokeapi"
 import { prisma } from "./prisma.server"
 
 export async function getAllPokemon() {

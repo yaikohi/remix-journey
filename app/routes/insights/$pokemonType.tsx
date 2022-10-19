@@ -1,7 +1,7 @@
 import type { Pokemon } from "@prisma/client"
 import type { LoaderFunction } from "@remix-run/node"
-import type { PokemonTypeNames } from "types/pokemon"
-import { Link, useLoaderData } from "@remix-run/react"
+import type { PokemonTypeNames } from "types/pokemon-pokeapi"
+import { Link, Outlet, useLoaderData } from "@remix-run/react"
 import { getPokemonByType } from "~/models/pokemon.server"
 import { pokemonHasMultipleTypes } from "~/utils/pokemonFilters"
 import {
@@ -26,10 +26,15 @@ import {
 } from "~/models/pokemon-aggregations.server"
 import { PokemonSpecsList } from "~/components/pokemon-specs-list"
 import { PokemonSpecsListSmall } from "~/components/pokemon-specs-list-small"
+import { PokemonCard } from "~/components/pokemon-card"
 
 export const loader: LoaderFunction = async ({ params }) => {
     const pokemonTypeParam = params.pokemonType as PokemonTypeNames
     const pokemons = await getPokemonByType(pokemonTypeParam)
+
+    /**
+     * TODO: Refactor all of this.
+     */
 
     // MAXES
     const maxHp = await getHighestHpBaseStat(pokemonTypeParam)
@@ -69,41 +74,41 @@ export const loader: LoaderFunction = async ({ params }) => {
     return {
         pokemons,
         param: pokemonTypeParam,
-        max: {
-            maxHp,
-            maxAttack,
-            maxDefense,
-            maxSpecialAttack,
-            maxSpecialDefense,
-            maxSpeed
-        },
-        min: {
-            minHp,
-            minAttack,
-            minDefense,
-            minSpecialAttack,
-            minSpecialDefense,
-            minSpeed
-        },
-        average: {
-            averageHp: averageHp ? Math.round(averageHp) : 0,
-            averageAttack: averageAttack ? Math.round(averageAttack) : 0,
-            averageDefense: averageDefense ? Math.round(averageDefense) : 0,
-            averageSpecialAttack: averageSpecialAttack
-                ? Math.round(averageSpecialAttack)
-                : 0,
-            averageSpecialDefense: averageSpecialDefense
-                ? Math.round(averageSpecialDefense)
-                : 0,
-            averageSpeed: averageSpeed ? Math.round(averageSpeed) : 0
+        metrics: {
+            max: {
+                maxHp,
+                maxAttack,
+                maxDefense,
+                maxSpecialAttack,
+                maxSpecialDefense,
+                maxSpeed
+            },
+            min: {
+                minHp,
+                minAttack,
+                minDefense,
+                minSpecialAttack,
+                minSpecialDefense,
+                minSpeed
+            },
+            average: {
+                averageHp: averageHp ? Math.round(averageHp) : 0,
+                averageAttack: averageAttack ? Math.round(averageAttack) : 0,
+                averageDefense: averageDefense ? Math.round(averageDefense) : 0,
+                averageSpecialAttack: averageSpecialAttack
+                    ? Math.round(averageSpecialAttack)
+                    : 0,
+                averageSpecialDefense: averageSpecialDefense
+                    ? Math.round(averageSpecialDefense)
+                    : 0,
+                averageSpeed: averageSpeed ? Math.round(averageSpeed) : 0
+            }
         }
     }
 }
 
 export default function PokemonTypeRoute() {
-    const { pokemons, param, max, min, average } = useLoaderData()
-
-    console.log(average)
+    const { pokemons, param, metrics } = useLoaderData()
     return (
         <>
             <main className="grid max-w-xl min-w-full grid-cols-4 p-4 rounded-xl bg-ctp-overlay0">
@@ -130,7 +135,9 @@ export default function PokemonTypeRoute() {
                             }).length
                         }
                     />
+                    <Outlet context={{ pokemons, param, metrics }} />
 
+                    {/*                     
                     <PokemonSpecsList
                         title="Maxes"
                         hp={max.maxHp}
@@ -157,57 +164,10 @@ export default function PokemonTypeRoute() {
                         specialAttack={average.averageSpecialAttack}
                         specialDefense={average.averageSpecialDefense}
                         speed={average.averageSpeed}
-                    />
+                    /> */}
                 </div>
                 {pokemons.slice(0, 100).map((pokeman: Pokemon) => {
-                    return (
-                        <div
-                            key={pokeman.id}
-                            className="flex flex-col items-center p-4 m-8 rounded-xl bg-ctp-overlay1"
-                        >
-                            <section className="capitalize">
-                                <h2 className="text-2xl font-bold text-ctp-rosewater">
-                                    {pokeman.name}
-                                </h2>
-                                <p className="italic text-ctp-text">
-                                    {pokeman.pokedexId}
-                                </p>
-                                <ul className="flex gap-2 my-2">
-                                    {pokeman.types.map((type, idx: number) => (
-                                        <li
-                                            className="p-2 rounded-md bg-ctp-overlay0"
-                                            key={idx}
-                                        >
-                                            {type}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <div className="flex flex-col px-8 py-4 my-4 rounded-lg bg-ctp-overlay2">
-                                    <img
-                                        src={pokeman.image}
-                                        alt={pokeman.name}
-                                    />
-                                    <h3 className="my-4 text-xl">Base stats</h3>
-                                    <dl className="grid grid-cols-2 ">
-                                        <dt>hp</dt>
-                                        <dd>{pokeman.hpBaseStat}</dd>
-                                        <dt>attack</dt>
-                                        <dd>{pokeman.attackBaseStat}</dd>
-                                        <dt>defence</dt>
-                                        <dd>{pokeman.defenseBaseStat}</dd>
-                                        <dt>special attack</dt>
-                                        <dd>{pokeman.specialAttackBaseStat}</dd>
-                                        <dt>special defence</dt>
-                                        <dd>
-                                            {pokeman.specialDefenseBaseStat}
-                                        </dd>
-                                        <dt>speed</dt>
-                                        <dd>{pokeman.speedBaseStat}</dd>
-                                    </dl>
-                                </div>
-                            </section>
-                        </div>
-                    )
+                    return <PokemonCard key={pokeman.id} pokemon={pokeman} />
                 })}
             </main>
         </>

@@ -1,5 +1,5 @@
 import type { Url } from "./global"
-import type { Pokemon, PokemonTypeNames } from "./pokemon"
+import type { Pokemon, PokemonTypeNames } from "./pokemon-pokeapi"
 
 export type Move = {
     accuracy: number
