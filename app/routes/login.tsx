@@ -1,5 +1,4 @@
 import { createUserSession, login, register } from "~/models/session.server"
-import { Navbar, routes } from "~/components/navbar"
 import type { ActionFunction } from "@remix-run/node"
 import {
     badRequest,
