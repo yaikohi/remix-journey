@@ -1,18 +1,29 @@
-import type { LoaderFunction } from "@remix-run/node"
-import { Link } from "@remix-run/react"
+import { BaseTag } from "~/components/styled-components/base-tags"
 
-import { PokemonSpecsList } from "~/components/pokemon-specs-list"
+const StyledList = ({ children }: any) => (
+    <ul className="flex flex-col gap-4 pl-8">{children}</ul>
+)
 
-// export const loader: LoaderFunction = async ({ params }) => {
-//     return {}
-// }
+const StyledListItem = ({ children }: any) => (
+    <li className="text-xl ">{children}</li>
+)
 
 export default function PokemonTypeStatOverview() {
     return (
-        <div className="col-span-2 bg-ctp-overlay1">
-            <Link to="max">Max</Link>
-            <Link to="min">Min</Link>
-            <Link to="average">Average</Link>
+        <div className="h-full max-h-full min-h-full col-span-2 ">
+            <div className="h-full">
+                <StyledList>
+                    <StyledListItem>
+                        <BaseTag to="max">Max</BaseTag>
+                    </StyledListItem>
+                    <StyledListItem>
+                        <BaseTag to="min">Min</BaseTag>
+                    </StyledListItem>
+                    <StyledListItem>
+                        <BaseTag to="average">Average</BaseTag>
+                    </StyledListItem>
+                </StyledList>
+            </div>
         </div>
     )
 }

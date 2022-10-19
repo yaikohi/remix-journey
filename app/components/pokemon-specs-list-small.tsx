@@ -1,4 +1,3 @@
-import { Pokemon } from "@prisma/client"
 
 type PokemonSpecsListSmallProps = {
     title: string

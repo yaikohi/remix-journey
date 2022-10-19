@@ -2,7 +2,8 @@
 // render component for pages
 
 import { Link } from "@remix-run/react/dist/components"
-import type { Pokemon } from "types/pokemon"
+import type { Pokemon } from "types/pokemon-pokeapi"
+import { BaseHeader2 } from "./styled-components/base-headers"
 
 type PokemonEeveeVolutionsProps = {
     evolutions: Pokemon[]
@@ -34,7 +35,7 @@ export default function PokemonEeveeVolutions({
 }: PokemonEeveeVolutionsProps) {
     return (
         <>
-            <h2 className="text-2xl bg-ctp-surface1">Evolutions</h2>
+            <BaseHeader2>Evolutions</BaseHeader2>
             <div className="grid justify-center grid-cols-4">
                 {evolutions.map((evolution, idx) => {
                     return (

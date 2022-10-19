@@ -1,3 +1,21 @@
+import { BaseHeader3 } from "./styled-components/base-headers"
+
+const Container = ({ children }: any) => (
+    <div className="max-w-md p-2">{children}</div>
+)
+
+const StyledDescriptionList = ({ children }: any) => (
+    <dl className="grid grid-cols-2 mx-2 text-ctp-subtext0">{children}</dl>
+)
+
+const StyledDescriptionTitle = ({ children }: any) => (
+    <dd className="font-bold">{children}</dd>
+)
+
+const StyledDescriptionDetails = ({ children }: any) => (
+    <dd className="font-bold">{children}</dd>
+)
+
 type PokemonSpecsListProps = {
     title: string
     hp: number
@@ -17,38 +35,28 @@ export const PokemonSpecsList = ({
     speed
 }: PokemonSpecsListProps) => {
     return (
-        <div className="max-w-md p-2">
-            <h3 className="text-xl">{title}</h3>
-            <dl className="grid grid-cols-2 mx-2 text-ctp-subtext0">
-                <dt>
-                    <span className="capitalize">hp</span>:
-                </dt>
-                <dd className="font-bold text-ctp-rosewater">{hp}</dd>
-                <dt>
-                    <span className="capitalize">attack</span>:
-                </dt>
-                <dd className="font-bold text-ctp-rosewater">{attack}</dd>
-                <dt>
-                    <span className="capitalize">defense</span>:
-                </dt>
-                <dd className="font-bold text-ctp-rosewater">{defense}</dd>
-                <dt>
-                    <span className="capitalize">special attack</span>:
-                </dt>
-                <dd className="font-bold text-ctp-rosewater">
+        <Container>
+            <BaseHeader3 className="text-xl">{title}</BaseHeader3>
+            <StyledDescriptionList>
+                <StyledDescriptionTitle>hp:</StyledDescriptionTitle>
+                <StyledDescriptionDetails>{hp}</StyledDescriptionDetails>
+                <StyledDescriptionTitle>attack:</StyledDescriptionTitle>
+                <StyledDescriptionDetails>{attack}</StyledDescriptionDetails>
+                <StyledDescriptionTitle>defense:</StyledDescriptionTitle>
+                <StyledDescriptionDetails>{defense}</StyledDescriptionDetails>
+                <StyledDescriptionTitle>special attack:</StyledDescriptionTitle>
+                <StyledDescriptionDetails>
                     {specialAttack}
-                </dd>
-                <dt>
-                    <span className="capitalize">special defense</span>:
-                </dt>
-                <dd className="font-bold text-ctp-rosewater">
+                </StyledDescriptionDetails>
+                <StyledDescriptionTitle>
+                    special defense:
+                </StyledDescriptionTitle>
+                <StyledDescriptionDetails>
                     {specialDefense}
-                </dd>
-                <dt>
-                    <span className="capitalize">speed</span>:
-                </dt>
-                <dd className="font-bold text-ctp-rosewater">{speed}</dd>
-            </dl>
-        </div>
+                </StyledDescriptionDetails>
+                <StyledDescriptionTitle>speed:</StyledDescriptionTitle>
+                <StyledDescriptionDetails>{speed}</StyledDescriptionDetails>
+            </StyledDescriptionList>
+        </Container>
     )
 }

@@ -1,6 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { Outlet, useLoaderData } from "@remix-run/react"
+import { BaseHeader } from "~/components/styled-components/base-headers"
 import {
     getAllPokemons,
     getPokemonsByBases
@@ -25,7 +26,7 @@ export default function Pokemon() {
     return (
         <>
             <div className="p-3 bg-ctp-crust">
-                <h1 className="text-7xl">Pokemon</h1>
+                <BaseHeader>Pokemon</BaseHeader>
             </div>
             <div className="flex flex-col items-center p-12 mx-auto lg:max-w-[1800px]">
                 <Outlet context={data} />

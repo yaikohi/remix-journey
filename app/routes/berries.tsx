@@ -1,5 +1,6 @@
 import { json } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
+import { BaseHeader } from "~/components/styled-components/base-headers";
 import { getAllBerries } from "~/models/berry.server";
 
 type LoaderData = Awaited<ReturnType<typeof getAllBerries>>;
@@ -14,7 +15,7 @@ export default function Berries() {
   return (
     <>
       <div className="p-3 bg-ctp-crust">
-        <h1 className="text-7xl">Berries</h1>
+        <BaseHeader>Berries</BaseHeader>
       </div>
       <div className="flex flex-col items-center max-w-4xl p-24 mx-auto">
         <Outlet context={berries} />

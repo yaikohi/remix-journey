@@ -8,3 +8,4 @@ Created this project to learn about remix and project structuring, as well as a 
 # Theme: Catppuccin mocha
 
 [style-guide](https://github.com/catppuccin/catppuccin/blob/dev/docs/style-guide.md)
+

@@ -5,6 +5,7 @@ import type { PokemonStat, Pokemon as PokemonType } from "types/pokemon"
 import Pagination from "~/components/pagination"
 import PokemonEeveeVolutions from "~/components/pokemon-eevee-volution"
 import PokemonEvolutionChain from "~/components/pokemon-evolution"
+import { BaseHeader } from "~/components/styled-components/base-headers"
 import {
     getPokemonByName,
     getPokemonWithEvolutions
@@ -67,7 +68,7 @@ export default function Pokemon() {
                 currentRoute={pokemon.name}
             /> */}
             <div className="flex justify-center col-span-3 align-middle bg-ctp-surface0">
-                <h1 className="p-2 m-4 text-5xl font-extrabold">{name}</h1>
+                <BaseHeader>{name}</BaseHeader>
             </div>
 
             <div className="bg-ctp-surface0">

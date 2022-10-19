@@ -15,7 +15,6 @@ import {
     useLoaderData
 } from "@remix-run/react"
 import { getAllPokemon } from "./models/pokemon.server"
-import { prisma } from "./models/prisma.server"
 import { getUser } from "./models/session.server"
 import styles from "./styles/app.css"
 
@@ -37,76 +36,93 @@ export const loader: LoaderFunction = async ({ request }) => {
     })
 }
 
+const BodyGrid = ({ children }: any) => (
+    <body className="grid grid-cols-2 grid-rows-2 bg-ctp-base text-ctp-text">
+        {children}
+    </body>
+)
+
+const NavbarContainer = ({ children }: any) => (
+    <nav className="flex flex-row col-start-1 row-start-1 max-h-10">
+        {children}
+    </nav>
+)
+
+const NavbarList = ({ children }: any) => (
+    <ul className="flex flex-row items-center w-full gap-2 px-8 rounded-md last:ml-auto last:mr-8">
+        {children}
+    </ul>
+)
+
+const NavbarListItem = ({ children }: any) => (
+    <li className="text-xl capitalize hover:text-ctp-green">{children}</li>
+)
+
+const LogoutButton = ({ children }: any) => (
+    <button
+        type="submit"
+        className="p-2 text-xl rounded-md hover:text-ctp-green bg-ctp-surface1"
+    >
+        {children}
+    </button>
+)
+
 export default function App() {
     const data = useLoaderData()
     const { user } = data
+    
     return (
         <html lang="en">
             <head>
                 <Meta />
                 <Links />
             </head>
-            <body className="bg-ctp-base text-ctp-text">
+            <BodyGrid>
                 {user ? (
                     <>
-                        <nav className="flex flex-row py-2 my-2 text-ctp-rosewater bg-ctp-surface0">
-                            <ul className="flex flex-row items-center w-full gap-2 px-8 mx-8 rounded-md last:ml-auto last:mr-8">
-                                <li className="text-xl capitalize hover:text-ctp-green">
+                        <NavbarContainer>
+                            <NavbarList>
+                                <NavbarListItem>
                                     <Link to="/">home</Link>
-                                </li>
-                                <li className="text-xl capitalize hover:text-ctp-green">
+                                </NavbarListItem>
+                                <NavbarListItem>
                                     <Link to="/insights">Insights</Link>
-                                </li>
-                                {/* <li className="text-xl capitalize hover:text-ctp-green">
-                                    <Link to="/berries">berries</Link>
-                                </li> */}
-                                <li className="text-xl capitalize hover:text-ctp-green">
+                                </NavbarListItem>
+                                <NavbarListItem>
                                     <Link to="/user">{user.username}</Link>
-                                </li>
-                            </ul>
-                            <form action="/logout" method="post">
-                                <button
-                                    type="submit"
-                                    className="p-2 mx-4 text-xl rounded-md hover:text-ctp-green bg-ctp-surface1"
-                                >
-                                    Logout
-                                </button>
-                            </form>
-                        </nav>
+                                </NavbarListItem>
+                            </NavbarList>
+                        </NavbarContainer>
+                        <form
+                            className="col-start-2 row-start-1 ml-auto mr-8 max-w-max max-h-12"
+                            action="/logout"
+                            method="post"
+                        >
+                            <LogoutButton>Logout</LogoutButton>
+                        </form>
                     </>
                 ) : (
                     <>
-                        <nav className="flex flex-row py-2 my-2 text-ctp-rosewater bg-ctp-surface0">
-                            <ul className="flex flex-row items-center w-full gap-2 px-8 mx-8 rounded-md">
-                                <li className="text-xl capitalize hover:text-ctp-green">
+                        <NavbarContainer>
+                            <NavbarList>
+                                <NavbarListItem>
                                     <Link to="/">home</Link>
-                                </li>
-                                {/* <li className="text-xl capitalize hover:text-ctp-green">
-                                    <Link to="/pokemon">pokemon</Link>
-                                </li>
-                                <li className="text-xl capitalize hover:text-ctp-green">
-                                    <Link to="berries">berries</Link>
-                                </li> */}
-                                <li className="text-xl capitalize hover:text-ctp-green">
+                                </NavbarListItem>
+                                <NavbarListItem>
                                     <Link to="/login">Login</Link>
-                                </li>
-                            </ul>
+                                </NavbarListItem>
+                            </NavbarList>
                             <form action="/logout" method="post">
-                                <button
-                                    type="submit"
-                                    className="p-2 mx-4 text-xl rounded-md hover:text-ctp-green bg-ctp-surface1"
-                                >
-                                    Logout
-                                </button>
+                                <LogoutButton>Logout</LogoutButton>
                             </form>
-                        </nav>
+                        </NavbarContainer>
                     </>
                 )}
                 <Outlet context={data} />
                 <ScrollRestoration />
                 <Scripts />
                 <LiveReload />
-            </body>
+            </BodyGrid>
         </html>
     )
 }

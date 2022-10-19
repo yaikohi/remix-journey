@@ -2,7 +2,7 @@ import type { Pokemon } from "@prisma/client"
 
 
 const CardContainer = ({ children }: any) => (
-    <div className="flex flex-col items-center p-4 m-8 rounded-xl bg-ctp-overlay1">
+    <div className="flex flex-col items-center p-4 m-8 rounded-xl bg-ctp-red">
         {children}
     </div>
 )
@@ -10,7 +10,7 @@ const CardSection = ({ children }: any) => (
     <div className="capitalize">{children}</div>
 )
 const CardTitle = ({ children }: any) => (
-    <h2 className="text-2xl font-bold text-ctp-rosewater">{children}</h2>
+    <h2 className="text-2xl font-bold text-ctp-subtext0">{children}</h2>
 )
 
 const CardSubtitle = ({ children }: any) => (
@@ -18,7 +18,7 @@ const CardSubtitle = ({ children }: any) => (
 )
 
 const CardImageContainer = ({ children }: any) => (
-    <div className="flex flex-col px-8 py-4 my-4 rounded-lg bg-ctp-overlay2">
+    <div className="flex flex-col px-8 py-4 my-4 rounded-lg ">
         {children}
     </div>
 )
@@ -62,7 +62,6 @@ type PokemonCardProps = {
 }
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
     const {
-        id,
         name,
         pokedexId,
         types,
@@ -76,14 +75,14 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
     } = pokemon
 
     return (
-        <CardContainer key={id}>
+        <CardContainer>
             <CardSection>
                 <CardTitle>{name}</CardTitle>
                 <CardSubtitle>{pokedexId}</CardSubtitle>
                 <ul className="flex gap-2 my-2">
                     {types.map((type: string, idx: number) => (
                         <li
-                            className="p-2 rounded-md bg-ctp-overlay0"
+                            className="p-2 rounded-md "
                             key={idx}
                         >
                             {type}
